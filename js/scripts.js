@@ -46,7 +46,7 @@ SiteManager.prototype.addGood = function(name, desc, quantity, price, imglink) {
 }
 
 Good.prototype.decreaseAmount = function(amount){
-  if(amount.isNaN() === true){
+  if(isNaN(amount) === true){
     alert("please enter a quantity");
     return 0;
   }
