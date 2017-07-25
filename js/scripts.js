@@ -1,4 +1,6 @@
 //Business Logic
+
+
 function testPassword(first, second) {
   if (first===second) {
     return true;
