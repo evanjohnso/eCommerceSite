@@ -1,16 +1,16 @@
 //Business Logic
 
 function SiteManager(){
-  this.buyer[];
-  this.goods[];
+  this.buyer = [];
+  this.goods = [];
 }
 
-function Good(name, desc, quantity, price, imglink, id){
+function Good(name, desc, quantity, price, id){
   this.goodName = name;
   this.goodDesc = desc;
   this.quantity = quantity;
   this.price = price;
-  this.imgLink = imglink;
+  // this.imgLink = imglink;
   this.goodID = id;
 }
 
@@ -29,7 +29,7 @@ function NewAccount(first, last, userName, password) {
 }
 
 
-SiteManger.prototype.addGood(name, desc, quantity, price, imglink){
+SiteManager.prototype.addGood = function(name, desc, quantity, price, imglink) {
   var index = this.goods.length;
   var newGood = Good(name, desc, quantity, price, imglink, index);
   this.goods.push(newGood);
@@ -43,6 +43,12 @@ NewAccount.prototype.fullName = function() {
 //User Interface
 $(document).ready(function() {
   var accountBank = []; //Hold accounts in array
+  var goodsArray = [];
+  var productOne = new Good('apple','apples are delicious', 5, 2, 1);
+  var two = new Good('cherries','apples are delicious', 5, 2, 222);
+  var three = new Good('pies','apples are delicious', 5, 2, 333);
+  var four = new Good('delicious','apples are delicious', 5, 2, 444);
+  goodsArray.push(productOne, two, three, four);
 
   function showProducts(productArray) {
     var colCount = 3;
@@ -60,10 +66,13 @@ $(document).ready(function() {
                       '</p>'+
                     '</div>'+
                     '<div class="panel-body">'+
-                      '<p>Age: ' + productArray[i].age +', species: ' + productArray[i].species + '</p>' +
-                      '<div class="checkbox">' +
-                        '<label><input type="checkbox" value="" id="' + productArray[i].idNum + '">Adopt Me!</label>'+
-                      '</div>'+
+                      '<p>' + productArray[i].goodDesc + '</p>' +
+                      '<p>' + productArray[i].price + '</p>' +
+                      '<form class="form-group">' +
+                        '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
+                        '<input type = "number" id= "'+ productArray[i].goodID +' ">'+
+                        '<button class"btn btn-info">"Add to Cart!"</button'+
+                      '</form>'+
                     '</div>'+
                   '</div>'+
                 '</div>';
@@ -78,6 +87,7 @@ $(document).ready(function() {
     }
     return output;
   }
+
 
 
 
@@ -101,8 +111,10 @@ $(document).ready(function() {
     }
     alert('Welcome back, ' + accountHolder.fullName() );
     $('.form-group input').val(''); //Reset form fields
-    $(".col-md-6").hide();
-    showProducts();
+    // $(".col-md-6").hide();
+
+    var ourProducts = showProducts(goodsArray) ;
+    $('#productDisplay').html(ourProducts);
 
   });
 
