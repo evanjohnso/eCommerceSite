@@ -22,3 +22,16 @@ body {
   border: 2px solid white;
   border-radius: 5%;
 }
+
+.fruitPic{
+  height: 4.5em;
+  width: auto;
+  margin-top: -55px;
+  float: right;
+}
+
+.style1{
+  font-size: 2em;
+  word-wrap: break-word;
+  width: 10em;
+}
