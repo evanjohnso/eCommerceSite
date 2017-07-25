@@ -13,10 +13,16 @@ function NewAccount(first, last, userName, password) {
   this.password = password;
 }
 
+NewAccount.prototype.fullName = function() {
+  // console.log('yo');
+  return this.first + ' ' + this.last;
+}
+
 
 //User Interface
 $(document).ready(function() {
-  var accountBank = [];
+
+  var accountBank = []; //Hold accounts in array
   $('#newAccount').submit(function(e) {
     e.preventDefault();
     //Take values
@@ -33,11 +39,10 @@ $(document).ready(function() {
     } else {
       alert("Please enter a valid password");
     }
-    console.log(accountHolder);
-console.log(accountBank); 
+    alert('Welcome back, ' + accountHolder.fullName() );
+    $('.form-group input').val(''); //Reset form fields
+    $(".col-md-6").hide();
 
-
-    $('.form-group input').val('');
   });
 
 });
