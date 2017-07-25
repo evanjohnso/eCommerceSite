@@ -71,6 +71,7 @@ $(document).ready(function() {
   var goodsArray = siteManager.goods;
   // console.log(goodsArray);
   var accountBank = []; //Hold accounts in array
+  var userCart = [];
 
   function showProducts(productArray) {
     var colCount = 3;
@@ -133,34 +134,41 @@ $(document).ready(function() {
     }
 
     $('.form-group input').val(''); //Reset form fields
-    $(".col-md-6").hide();
-
-    // Give new buttons functionality
-
-
-      // var buttonId = (this).id;
-      // console.log( (this).class );
-      // console.log(buttonId);
-      //
-      // var quantity = $('.' + buttonId).val();
-      // console.log(quantity);
-      // console.log( (this).id );
-      // var quantityBought = $('')
-
-      $("#productDisplay").show();
-      $("#signInScreen").hide();
+    $("#productDisplay").show();
+    $("#signInScreen").hide();
 
     });
 
     $(".products").submit(function(event) {
       event.preventDefault();
-      console.log("sup");
-      var quantity = parseInt ($(this).find('input').val() );
-      console.log("doggie");
-      var index = parseInt($(this).find('input').attr('id'));
-      alert("old value: " + siteManager.goods[index].quantity);
-      siteManager.goods[index].decreaseAmount(quantity);
-      alert("new value: " + siteManager.goods[index].quantity);
+      var quantityPurchased = parseInt ($(this).find('input').val() );
+      var index = parseInt ( $(this).find('input').attr('id') );
+      var thisGuy = goodsArray[index];
+      console.log( thisGuy );
+      var thisPrice = thisGuy.price;
+      console.log(this);
+
+
+      thisGuy.decreaseAmount(quantityPurchased);
+      var newParValue = thisGuy.quantity;
+
+      var newCartItem = new CartItem (quantityPurchased, thisPrice);
+
+      function CartItem (amount, price) {
+        this.amount = amount;
+        this.price = price;
+      }
+      CartItem.prototype.subTotal = function() {
+          return this.amount * this.price;
+      }
+      userCart.push( thisGuy.goodName, newCartItem.subTotal() );
+      $('.itemAmount').text(quantityPurchased);
+      $('.itemName').text(goodsArray[index].goodName);
+      $('.itemSubtotal').text( newCartItem.subTotal() );
+
+
+
+      $(".usersCart").show();
   });
 
   $("#signIn").submit(function(event) {

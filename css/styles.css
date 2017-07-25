@@ -50,3 +50,8 @@ div .jumbotron h1 {
 #productDisplay {
   display: none;
 }
+
+.usersCart {
+  display: none;
+  width: 50%;
+}
