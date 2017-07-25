@@ -1,4 +1,5 @@
 //Business Logic
+
 function SiteManager(){
   this.buyer[];
   this.goods[];
