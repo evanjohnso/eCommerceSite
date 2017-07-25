@@ -55,7 +55,7 @@ $(document).ready(function() {
   var siteManager = new SiteManager();
   populateGoods(siteManager);
   var goodsArray = siteManager.goods;
-  console.log(goodsArray);
+  // console.log(goodsArray);
   var accountBank = []; //Hold accounts in array
 
   function showProducts(productArray) {
@@ -76,10 +76,10 @@ $(document).ready(function() {
                     '<div class="panel-body">'+
                       '<p>' + productArray[i].goodDesc + '</p>' +
                       '<p>' + productArray[i].price + '</p>' +
-                      '<form class="form-group">' +
+                      '<form class="form-group products">' +
                         '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
                         '<input type = "number" id= "'+ productArray[i].goodID +' ">'+
-                        '<button class"btn btn-info">"Add to Cart!"</button'+
+                        '<button type="submit" class="btn btn-warning addCart' + productArray[i].goodID +'">Add to Cart!</button>'+
                       '</form>'+
                     '</div>'+
                   '</div>'+
@@ -95,9 +95,13 @@ $(document).ready(function() {
     }
     return output;
   }
+  var ourProducts = showProducts(goodsArray) ;
+  $('#productDisplay').html(ourProducts);
 
-  $('#newAccount').submit(function(e) {
-    e.preventDefault();
+
+  $('#newAccount').submit(function(event) {
+    event.preventDefault();
+    console.log(this);
     //Take values
     var first = $('#newFirstName').val();
     var second = $('#newLastName').val();
@@ -112,11 +116,37 @@ $(document).ready(function() {
     } else {
       alert("Please enter a valid password");
     }
-    // alert('Welcome back, ' + accountHolder.fullName() );
+
     $('.form-group input').val(''); //Reset form fields
     $(".col-md-6").hide();
-    var ourProducts = showProducts(goodsArray) ;
-    $('#productDisplay').html(ourProducts);
 
+    // Give new buttons functionality
+
+
+      // var buttonId = (this).id;
+      // console.log( (this).class );
+      // console.log(buttonId);
+      //
+      // var quantity = $('.' + buttonId).val();
+      // console.log(quantity);
+      // console.log( (this).id );
+      // var quantityBought = $('')
+
+      $("#productDisplay").show();
+
+    });
+
+    $(".products").submit(function(event) {
+      event.preventDefault();
+      var quantity = parseInt ($(this).find('input').val() );
+      var index = $(this).find('input').attr('id');
+      alert("old value: " + SiteManager.goods[index]);
+      SiteManager.goods[index].decreaseAmount(quantity);
+      alert("new value: " + SiteManager.goods[index]);
   });
+
+  $("#signIn").submit(function(event) {
+    event.preventDefault();
+  });
+
 });
