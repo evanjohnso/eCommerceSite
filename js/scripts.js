@@ -14,36 +14,27 @@ function NewAccount(first, last, userName, password) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 //User Interface
 $(document).ready(function() {
+  var accountBank = [];
   $('#newAccount').submit(function(e) {
     e.preventDefault();
+    //Take values
     var first = $('#newFirstName').val();
     var second = $('#newLastName').val();
     var newUserName = $('#newUserName').val();
     var pswd = $('#newUserPassword').val();
     var pswdConfirm = $('#confirmPassword').val();
     var verified = testPassword(pswd, pswdConfirm);
-
+    //If verified, create new Object
     if (verified) {
       var accountHolder = new NewAccount(first, second, newUserName, pswd)
+      accountBank.push(accountHolder);
     } else {
       alert("Please enter a valid password");
     }
     console.log(accountHolder);
-    console.log(first, second, newUserName, pswd, pswdConfirm);
+console.log(accountBank); 
 
 
     $('.form-group input').val('');
