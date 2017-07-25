@@ -46,6 +46,10 @@ SiteManager.prototype.addGood = function(name, desc, quantity, price, imglink) {
 }
 
 Good.prototype.decreaseAmount = function(amount){
+  if(amount.isNaN() === true){
+    alert("please enter a quantity");
+    return 0;
+  }
   var newAmount = this.quantity - amount;
   if(newAmount < 0){
     alert("Not enough inventory");
