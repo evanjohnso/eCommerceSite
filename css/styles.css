@@ -46,3 +46,7 @@ div .jumbotron h1 {
   word-wrap: break-word;
   width: 10em;
 }
+
+#productDisplay {
+  display: none;
+}
