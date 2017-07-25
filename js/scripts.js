@@ -1,16 +1,15 @@
 //Business Logic
-
 function SiteManager(){
   this.buyer = [];
   this.goods = [];
 }
 
-function Good(name, desc, quantity, price, id){
+function Good(name, desc, quantity, price, imglink, id){
   this.goodName = name;
   this.goodDesc = desc;
   this.quantity = quantity;
   this.price = price;
-  // this.imgLink = imglink;
+  this.imgLink = imglink;
   this.goodID = id;
 }
 
@@ -42,13 +41,9 @@ NewAccount.prototype.fullName = function() {
 
 //User Interface
 $(document).ready(function() {
+  var siteManager = new SiteManager();
+  var goodsArray = siteManager.goods;
   var accountBank = []; //Hold accounts in array
-  var goodsArray = [];
-  var productOne = new Good('apple','apples are delicious', 5, 2, 1);
-  var two = new Good('cherries','apples are delicious', 5, 2, 222);
-  var three = new Good('pies','apples are delicious', 5, 2, 333);
-  var four = new Good('delicious','apples are delicious', 5, 2, 444);
-  goodsArray.push(productOne, two, three, four);
 
   function showProducts(productArray) {
     var colCount = 3;
@@ -109,7 +104,7 @@ $(document).ready(function() {
     } else {
       alert("Please enter a valid password");
     }
-    alert('Welcome back, ' + accountHolder.fullName() );
+    // alert('Welcome back, ' + accountHolder.fullName() );
     $('.form-group input').val(''); //Reset form fields
     // $(".col-md-6").hide();
 
@@ -117,5 +112,4 @@ $(document).ready(function() {
     $('#productDisplay').html(ourProducts);
 
   });
-
 });
