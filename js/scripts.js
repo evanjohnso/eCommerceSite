@@ -45,13 +45,13 @@ SiteManager.prototype.addGood = function(name, desc, quantity, price, imglink) {
   this.goods.push(newGood);
 }
 
-Good.prototype.decreaseAmount(amount){
+Good.prototype.decreaseAmount = function(amount){
   var newAmount = this.quantity - amount;
   if(newAmount < 0){
-    alert("Not enough inventory")
+    alert("Not enough inventory");
     return 0;
   }
-  this.quanity -= amount;
+  this.quantity -= amount;
   return amount;
 }
 

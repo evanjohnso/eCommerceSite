@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik');
+
 html {
   position: relative;
   min-height: 100%;
@@ -11,18 +13,27 @@ body {
 }
 
 .jumbotron {
-  background: inherit;
+  background: white;
+  opacity: .5;
   text-align: center;
   margin-top: 2em;
   border: 3px solid white;
   border-radius: 5%;
+  font-family: 'Rubik', sans-serif;
+  font-size: 100px;
 }
-
-.col-md-6 {
-  border: 2px solid white;
-  border-radius: 5%;
+div .jumbotron h1 {
+  color: black
 }
-
+.input {
+  max-width: 100%;
+}
+.col-md-5 {
+  border-radius: 1%;
+  background: white;
+  opacity: .8;
+  color: black;
+}
 .fruitPic{
   height: 4.5em;
   width: auto;
