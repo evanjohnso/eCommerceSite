@@ -1,4 +1,18 @@
 //Business Logic
+function SiteManager(){
+  this.buyer[];
+  this.goods[];
+}
+
+function Good(name, desc, quantity, price, imglink, id){
+  this.goodName = name;
+  this.goodDesc = desc;
+  this.quantity = quantity;
+  this.price = price;
+  this.imgLink = imglink;
+  this.goodID = id;
+}
+
 function testPassword(first, second) {
   if (first===second) {
     return true;
@@ -13,11 +27,17 @@ function NewAccount(first, last, userName, password) {
   this.password = password;
 }
 
+
+SiteManger.prototype.addGood(name, desc, quantity, price, imglink){
+  var index = this.goods.length;
+  var newGood = Good(name, desc, quantity, price, imglink, index);
+  this.goods.push(newGood);
+}
+
 NewAccount.prototype.fullName = function() {
   // console.log('yo');
   return this.first + ' ' + this.last;
 }
-
 
 //User Interface
 $(document).ready(function() {
