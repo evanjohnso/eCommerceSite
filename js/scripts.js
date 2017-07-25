@@ -27,6 +27,18 @@ function NewAccount(first, last, userName, password) {
   this.password = password;
 }
 
+function populateGoods(sitemanager){
+  var name = ["apple"];
+  var desc = ["its fruit"];
+  var quantity = [12];
+  var price = [1.25];
+  var imglink = ["img/apple.png"];
+
+  for(i=0, i < name.length; i++){
+    sitemanager.addGood(name[i], desc[i], quantity[i], price[i], imglink[i]);
+  }
+
+}
 
 SiteManger.prototype.addGood(name, desc, quantity, price, imglink){
   var index = this.goods.length;
