@@ -93,7 +93,7 @@ $(document).ready(function() {
                       '<p>' + productArray[i].price + '</p>' +
                       '<form class="form-group products">' +
                         '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
-                        '<input type = "number" id= "'+ productArray[i].goodID +' ">'+
+                        '<input type = "number" id= "'+ productArray[i].goodID +'" placeholder="1">'+
                         '<button type="submit" class="btn btn-warning addCart' + productArray[i].goodID +'">Add to Cart!</button>'+
                       '</form>'+
                     '</div>'+
@@ -148,6 +148,7 @@ $(document).ready(function() {
       // var quantityBought = $('')
 
       $("#productDisplay").show();
+      $("#signInScreen").hide();
 
     });
 
