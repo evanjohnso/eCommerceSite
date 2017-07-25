@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/scripts.js"></script>
+    <title>Pets</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>We sell the finest goods west of the Mississippi!</h1>
+      </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Already have an account?</h3>
+            <h5>Sign in here: </h5>
+            <form class="form-group" id="signIn">
+              <div class="form-group">
+                <label for="userName">User Name: </label>
+                <input type="text" id="userName">
+              </div>
+              <div class="form-group">
+                <label for="userPassword">Password:</label>
+                <input type="password" id="userPassword">
+              </div>
+              <button type="submit" class="btn btn-info">Sign In</button>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <h3>Make an account now!</h3>
+            <form id="newAccount">
+              <div class="form-group">
+                <label for="newFirstName">First Name: </label>
+                <input type="text" id="newFirstName">
+              </div>
+              <div class="form-group">
+                <label for="newLastName">Last Name: </label>
+                <input type="text" id="newLastName">
+              </div>
+              <div class="form-group">
+                <label for="newUserName">User Name: </label>
+                <input type="text" id="newUserName">
+              </div>
+              <div class="form-group">
+                <label for="newUserPassword">Password:</label>
+                <input type="password" id="newUserPassword">
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword">
+              </div>
+              <button type="submit" class="btn btn-success">Sign Up!</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
