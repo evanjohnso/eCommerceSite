@@ -45,6 +45,16 @@ SiteManager.prototype.addGood = function(name, desc, quantity, price, imglink) {
   this.goods.push(newGood);
 }
 
+Good.prototype.decreaseAmount(amount){
+  var newAmount = this.quantity - amount;
+  if(newAmount < 0){
+    alert("Not enough inventory")
+    return 0;
+  }
+  this.quanity -= amount;
+  return amount;
+}
+
 NewAccount.prototype.fullName = function() {
   // console.log('yo');
   return this.first + ' ' + this.last;
