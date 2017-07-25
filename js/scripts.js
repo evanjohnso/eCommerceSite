@@ -29,11 +29,11 @@ function NewAccount(first, last, userName, password) {
 }
 
 function populateGoods(sitemanager){
-  var name = ["apple"];
+  var name = ["ackee", "buddhas hand", "hala aka puhala tree fruit", "horned mellon", "jackfruit", "mangosteen", "pitaya", "rambutan", "romanseco broccoli"];
   var desc = ["its fruit"];
-  var quantity = [12];
-  var price = [1.25];
-  var imglink = ["img/apple.png"];
+  var quantity = [12, 12, 12, 12, 12, 12, 12, 12, 12,];
+  var price = [1.25, 1.25, 1.25, 2.75, 2.75, 2.75, 3.50, 3.50, 3.50,];
+  var imglink = ["img/ackee.jpg", "img/buddhas.hand.jpg", "img/hala.aka.puhala.tree.fruit.jpg", "img/horned.melon.jpg", "img/jackfruit.jpg", "img/mangosteen.jpg", "img/pitaya.jpg", "img/rambutan.jpg", "img/romanseco.broccoli.jpg"];
 
   for(i=0, i < name.length; i++){
     sitemanager.addGood(name[i], desc[i], quantity[i], price[i], imglink[i]);
