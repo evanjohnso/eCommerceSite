@@ -50,3 +50,8 @@ div .jumbotron h1 {
 #productDisplay {
   display: none;
 }
+
+.panel-default{
+  /*color: black;*/
+  min-height: 420px;
+}
