@@ -183,17 +183,17 @@ $(document).ready(function() {
       $('.itemName').text(goodsArray[index].goodName);
       $('.itemSubtotal').text( newCartItem.subTotal() );
 
-
-
       $(".usersCart").show();
   });
-
+  //Check backend storage for matching account
   $("#signIn").submit(function(event) {
     event.preventDefault();
     var returnUser = $('#userName').val();
     var returnPassword = $('#userPassword').val();
-    var findit = siteManager.authorizedAccount(returnUser, returnPassword);
-    console.log(findit);
-
+    var loggedIn = siteManager.authorizedAccount(returnUser, returnPassword);
+    $('.welcomeScreen').show();
+    $('.displayName').text(loggedIn.first);
+    $("#productDisplay").show();
+    $("#signInScreen").hide();
   });
 });

@@ -9,6 +9,7 @@ body {
   background: url(background.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   color: lightblue;
 }
 
@@ -49,6 +50,11 @@ div .jumbotron h1 {
 
 #productDisplay {
   display: none;
+}
+
+.welcomeScreen {
+  display: none;
+  width: 50%;
 }
 
 .usersCart {
