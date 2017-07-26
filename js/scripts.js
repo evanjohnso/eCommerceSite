@@ -161,7 +161,7 @@ $(document).ready(function() {
                       '<form class="form-group products">' +
                         '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
                         '<input type = "number" id= "'+ productArray[i].goodID +' " placeholder="1">'+
-                        '<button class="btn btn-info">Add to Cart!</button'+
+                        '<button class="btn btn-info">Add to Cart!</button>'+
                       '</form>'+
                     '</div>'+
                   '</div>'+
