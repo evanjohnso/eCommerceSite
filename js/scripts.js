@@ -191,9 +191,14 @@ $(document).ready(function() {
     var returnUser = $('#userName').val();
     var returnPassword = $('#userPassword').val();
     var loggedIn = siteManager.authorizedAccount(returnUser, returnPassword);
-    $('.welcomeScreen').show();
-    $('.displayName').text(loggedIn.first);
-    $("#productDisplay").show();
-    $("#signInScreen").hide();
+
+    if (!loggedIn) {
+      alert('please enter a valid username and password');
+    } else {
+      $('.welcomeScreen').show();
+      $('.displayName').text(loggedIn.first);
+      $("#productDisplay").show();
+      $("#signInScreen").hide();
+    }
   });
 });
