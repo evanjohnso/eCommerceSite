@@ -51,7 +51,13 @@ div .jumbotron h1 {
   display: none;
 }
 
+<<<<<<< HEAD
 .usersCart {
   display: none;
   width: 50%;
+=======
+.panel-default{
+  /*color: black;*/
+  min-height: 420px;
+>>>>>>> fbaad9f761a01ec2e6fac0370f6189aa04943922
 }
