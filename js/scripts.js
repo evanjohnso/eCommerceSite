@@ -2,6 +2,21 @@
 function SiteManager(){
   this.buyer = [];
   this.goods = [];
+  this.accounts = [];
+}
+
+SiteManager.prototype.authorizedAccount = function (userName, password) {
+  var bank = this.accounts;
+  console.log(bank);
+  //Loop through all accounts for matching name
+  for (var i = 0; i <= bank.length; i ++) {
+    if (this.accounts[i].userName == userName && password == this.accounts[i].password) {
+      console.log(bank[i]);
+      return alert('hello there ' + userName)
+    } else if (i == bank.length - 1) {
+      console.log('please enter a valid input');
+    }
+  }
 }
 
 function Good(name, desc, quantity, price, imglink, id){
@@ -20,6 +35,7 @@ function testPassword(first, second) {
     return false;
   }
 }
+
 function NewAccount(first, last, userName, password) {
   this.first = first;
   this.last = last;
@@ -69,8 +85,6 @@ $(document).ready(function() {
   var siteManager = new SiteManager();
   populateGoods(siteManager);
   var goodsArray = siteManager.goods;
-  // console.log(goodsArray);
-  var accountBank = []; //Hold accounts in array
   var userCart = [];
 
   function showProducts(productArray) {
@@ -117,7 +131,7 @@ $(document).ready(function() {
 
   $('#newAccount').submit(function(event) {
     event.preventDefault();
-    console.log(this);
+
     //Take values
     var first = $('#newFirstName').val();
     var second = $('#newLastName').val();
@@ -125,17 +139,23 @@ $(document).ready(function() {
     var pswd = $('#newUserPassword').val();
     var pswdConfirm = $('#confirmPassword').val();
     var verified = testPassword(pswd, pswdConfirm);
+
     //If verified, create new Object
     if (verified) {
       var accountHolder = new NewAccount(first, second, newUserName, pswd)
-      accountBank.push(accountHolder);
+      //Push new account to sitemanager for storage
+      siteManager.accounts.push(accountHolder);
+      siteManager.authorizedAccount();
+
+      // $("#productDisplay").show();
+      // $("#signInScreen").hide();
     } else {
       alert("Please enter a valid password");
     }
 
     $('.form-group input').val(''); //Reset form fields
-    $("#productDisplay").show();
-    $("#signInScreen").hide();
+    // $("#productDisplay").show();
+    // $("#signInScreen").hide();
 
     });
 
@@ -143,14 +163,12 @@ $(document).ready(function() {
       event.preventDefault();
       var quantityPurchased = parseInt ($(this).find('input').val() );
       var index = parseInt ( $(this).find('input').attr('id') );
-      var thisGuy = goodsArray[index];
-      console.log( thisGuy );
-      var thisPrice = thisGuy.price;
-      console.log(this);
+      var thisGood = goodsArray[index];
 
+      var thisPrice = thisGood.price;
 
-      thisGuy.decreaseAmount(quantityPurchased);
-      var newParValue = thisGuy.quantity;
+      thisGood.decreaseAmount(quantityPurchased);
+      var newParValue = thisGood.quantity;
 
       var newCartItem = new CartItem (quantityPurchased, thisPrice);
 
@@ -161,7 +179,7 @@ $(document).ready(function() {
       CartItem.prototype.subTotal = function() {
           return this.amount * this.price;
       }
-      userCart.push( thisGuy.goodName, newCartItem.subTotal() );
+      userCart.push( thisGood.goodName, newCartItem.subTotal() );
       $('.itemAmount').text(quantityPurchased);
       $('.itemName').text(goodsArray[index].goodName);
       $('.itemSubtotal').text( newCartItem.subTotal() );
@@ -173,6 +191,9 @@ $(document).ready(function() {
 
   $("#signIn").submit(function(event) {
     event.preventDefault();
-  });
+    var returnUser = $('#userName').val();
+    var returnPassword = $('#userPassword').val();
+    console.log(accountBank);
 
+  });
 });
