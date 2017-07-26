@@ -107,8 +107,8 @@ $(document).ready(function() {
                       '<p>' + productArray[i].price + '</p>' +
                       '<form class="form-group">' +
                         '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
-                        '<input type = "number" id= "'+ productArray[i].goodID +' ">'+
-                        '<button class"btn btn-info">"Add to Cart!"</button'+
+                        '<input type = "number" id= "'+ productArray[i].goodID +' " placeholder="1">'+
+                        '<button class="btn btn-info">Add to Cart!</button'+
                       '</form>'+
                     '</div>'+
                   '</div>'+
@@ -138,14 +138,12 @@ $(document).ready(function() {
     if (verified) {
       var accountHolder = new Account(first, second, newUserName, pswd)
       siteManager.accounts.push(accountHolder);
+      $("#productDisplay").show(); //Show the hidden products
       console.log(siteManager.accounts);
     } else {
       alert("Please enter a valid password");
     }
-    $('.form-group input').val(''); //Reset form fields
-    $("#productDisplay").show(); //Show the hidden products
-    // $("#signInScreen").hide(); //Hide both sign in screens
-
+    // $('.form-group input').val(''); //Reset form fields
     });
     $(".products").submit(function(event) {
       event.preventDefault();
