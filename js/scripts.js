@@ -68,6 +68,20 @@ SiteManager.prototype.authorizedAccount = function(userName, userPassword) {
     }
   }
 }
+SiteManager.prototype.goodToCart = function(goodID, amount){
+  if (this.goods[goodID].decreaseAmount(amount) === 0) {
+    return 0;
+  }
+  this.currentShopper[0].addToCart(amount, this.goods[goodID]);
+}
+//will remove a specific amount of good(s) from the checkout cart and return it to the goods array
+SiteManager.prototype.cartToGood = function(goodID, amount){
+  var oldGoodId= this.currentShopper[0].cart[goodID].oldID;
+  if (this.currentShopper[0].removeFromCart(goodID, amount) === 0) {
+    return 0;
+  }
+  this.goods[oldGoodId].increaseAmount(amount);
+}
 Good.prototype.increaseAmount = function(amount){
   if (isNaN(amount) === true){
     return 0;
@@ -92,7 +106,7 @@ Account.prototype.addToCart = function(amount, inputGood){
   var index = this.cart.length;
   var newGood = new Good(inputGood.goodName, inputGood.goodDesc, amount, inputGood.price, inputGood.imgLink, index);
   newGood.oldID = inputGood.goodID; //hold on to the old id that references its place in the goods array
-  Account.cart.push(newGood);
+  this.cart.push(newGood);
 }
 Account.prototype.removeFromCart = function(cartIndex, amount){
   if (this.cart[cartIndex].quantity < amount) {
@@ -106,12 +120,58 @@ Account.prototype.removeFromCart = function(cartIndex, amount){
   this.cart[cartIndex].decreaseAmount(amount);
   return amount;
 }
+Account.prototype.totalCart = function() {
+  var total = 0;
+  for(var i=0; i < this.cart.length; i++){
+    total += (this.cart[i].price * this.cart[i].quantity);
+  }
+  return total;
+}
 //User Interface
 $(document).ready(function() {
   var siteManager = new SiteManager();
   populateGoods(siteManager);
   var goodsArray = siteManager.goods;
   //Display the backend goods to the HTML on DOCready
+
+  function showProducts(productArray) {
+    var colCount = 3;
+    var output = "";
+
+    for (var i =0; i < productArray.length; i++) {
+      if(colCount === 3){
+        output += '<div class="row">' //start a new row when 3 columns
+      }
+      output += '<div class ="col-md-4">' +
+                  '<div class="panel panel-default">' +
+                    '<div class="panel-heading">' +
+                      '<p class="style1">' +
+                      productArray[i].goodName +
+                      '</p>'+
+                      '<img src="' + productArray[i].imgLink + '" alt="broken" class="fruitPic"/>' +
+                    '</div>'+
+                    '<div class="panel-body">'+
+                      '<p>' + productArray[i].goodDesc + '</p>' +
+                      '<p>' + productArray[i].price + '</p>' +
+                      '<form class="form-group">' +
+                        '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
+                        '<input type = "number" id= "'+ productArray[i].goodID +' ">'+
+                        '<button class"btn btn-info">"Add to Cart!"</button'+
+                      '</form>'+
+                    '</div>'+
+                  '</div>'+
+                '</div>';
+      colCount--;
+      if (colCount === 0) {
+        output += '</div>'; //When three columns, add closing div for row
+        colCount = 3;
+      }
+    }
+    if (productArray.length%3 !== 0) {
+      output += '</div>';
+    }
+    return output;
+  }
   $('#productDisplay').html( showProducts(goodsArray) );
 
   $('#newAccount').submit(function(event) {
