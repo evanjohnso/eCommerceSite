@@ -55,3 +55,9 @@ div .jumbotron h1 {
   display: none;
   width: 50%;
 }
+
+.header button {
+  margin-top: 1em;
+  float: right;
+
+}

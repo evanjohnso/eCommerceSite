@@ -55,6 +55,7 @@ SiteManager.prototype.authorizedAccount = function(userName, userPassword) {
       return false;
     //Look for matching userName and password
     } else if (this.accounts[i].password === userPassword&& this.accounts[i].userName === userName) {
+      this.currentShopper.push(this.accounts[i]);
       return this.accounts[i];
     //If end of array is reached, return null
     } else if (i === this.accounts.length - 1) {
@@ -82,7 +83,47 @@ $(document).ready(function() {
   populateGoods(siteManager);
   var goodsArray = siteManager.goods;
   //Display the backend goods to the HTML on DOCready
-  $('#productDisplay').html( showProducts(goodsArray) );
+  var goods = showProducts(goodsArray)
+  $('#productDisplay').html(goods);
+
+  function showProducts(productArray) {
+    var colCount = 3;
+    var output = "";
+
+    for (var i =0; i < productArray.length; i++) {
+      if(colCount === 3){
+        output += '<div class="row">' //start a new row when 3 columns
+      }
+      output += '<div class ="col-md-4">' +
+                  '<div class="panel panel-default">' +
+                    '<div class="panel-heading">' +
+                      '<p class="style1">' +
+                      productArray[i].goodName +
+                      '</p>'+
+                      '<img src="' + productArray[i].imgLink + '" alt="broken" class="fruitPic"/>' +
+                    '</div>'+
+                    '<div class="panel-body">'+
+                      '<p>' + productArray[i].goodDesc + '</p>' +
+                      '<p>' + productArray[i].price + '</p>' +
+                      '<form class="form-group">' +
+                        '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
+                        '<input type = "number" id= "'+ productArray[i].goodID +' ">'+
+                        '<button class"btn btn-info">"Add to Cart!"</button'+
+                      '</form>'+
+                    '</div>'+
+                  '</div>'+
+                '</div>';
+      colCount--;
+      if (colCount === 0) {
+        output += '</div>'; //When three columns, add closing div for row
+        colCount = 3;
+      }
+    }
+    if (productArray.length%3 !== 0) {
+      output += '</div>';
+    }
+    return output;
+  }
 
   $('#newAccount').submit(function(event) {
     event.preventDefault();
@@ -103,7 +144,7 @@ $(document).ready(function() {
     }
     $('.form-group input').val(''); //Reset form fields
     $("#productDisplay").show(); //Show the hidden products
-    $("#signInScreen").hide(); //Hide both sign in screens
+    // $("#signInScreen").hide(); //Hide both sign in screens
 
     });
     $(".products").submit(function(event) {
@@ -147,13 +188,12 @@ $(document).ready(function() {
     } else if (authorized === 42) {
       alert('Please enter a valid input');
     } else {
-      //If account verified, push object to currentShopper and hide input fields
-      siteManager.currentShopper.push(authorized);
       $('.form-group input').val(''); //Reset form fields
       $('.welcomeScreen').show();
       // $('.displayName').text(authorized.first);
       $("#productDisplay").show();
       $("#signInScreen").hide();
+      console.log(siteManager.currentShopper);
     }
   });
 });
