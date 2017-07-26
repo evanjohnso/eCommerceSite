@@ -8,12 +8,16 @@ function SiteManager(){
 SiteManager.prototype.authorizedAccount = function (userName, password) {
   //Loop through all accounts for matching name
   for (var i = 0; i <= this.accounts.length; i ++) {
-    if (this.accounts[i].userName == userName && password == this.accounts[i].password) {
-      console.log(this.accounts[i]);
-      return this.accounts[i]; //return the users account
-    } else if (i == this.accounts.length - 1) {
-      console.log('not in this array mate');
+    //If no accounts, return false to UI
+    if (this.accounts.length == 0) {
       return false;
+      //Look for matching userName and password
+    } else if (this.accounts[i].userName == userName && password ==
+      this.accounts[i].password) {
+      return this.accounts[i]; //return the users account
+      //If end of array is reached, return null
+    } else if (i == this.accounts.length - 1) {
+      return 42;
     }
   }
 }
@@ -191,9 +195,11 @@ $(document).ready(function() {
     var returnUser = $('#userName').val();
     var returnPassword = $('#userPassword').val();
     var loggedIn = siteManager.authorizedAccount(returnUser, returnPassword);
-
+    // alert(loggedIn);
     if (!loggedIn) {
-      alert('please enter a valid username and password');
+      alert("We literally have zero customers, please create an account");
+    } else if (loggedIn == 42) {
+      alert('Please enter a valid user name and password');
     } else {
       $('.welcomeScreen').show();
       $('.displayName').text(loggedIn.first);
