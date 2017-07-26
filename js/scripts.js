@@ -1,7 +1,10 @@
 //Business Logic
+//Constructors
 function SiteManager(){
-  this.buyer = [];
+  this.buyers = [];
   this.goods = [];
+  this.accounts = [];
+  this.currentShopper = [];
 }
 
 function Good(name, desc, quantity, price, imglink, id){
@@ -12,7 +15,13 @@ function Good(name, desc, quantity, price, imglink, id){
   this.imgLink = imglink;
   this.goodID = id;
 }
-
+function Account(first, last, userName, password) {
+  this.first = first;
+  this.last = last;
+  this.userName = userName;
+  this.password = password;
+}
+//Functions
 function testPassword(first, second) {
   if (first===second) {
     return true;
@@ -20,13 +29,6 @@ function testPassword(first, second) {
     return false;
   }
 }
-function NewAccount(first, last, userName, password) {
-  this.first = first;
-  this.last = last;
-  this.userName = userName;
-  this.password = password;
-}
-
 function populateGoods(sitemanager){
   var name = ["ackee", "buddhas hand", "hala aka puhala tree fruit", "horned mellon", "jackfruit", "mangosteen", "pitaya", "rambutan", "romanesco broccoli"];
   var desc = ["So what does ackee taste like? It's completely unique. The fruit has a buttery, creamy texture and a mildtaste that reminded me of hearts of palm. The saltfish in the dish plays off the mild fruit nicely, adding a saline tang.", "Though it looks like a lemon gone wild, the Buddha's hand is actually a distinct fruit in the citron family. It has a sweet, lemon blossom aroma and no juice or pulp. The mild-tasting pith is not bitter, so the fruit can be zested or used whole.", "Although the hala fruit was indeed eaten in times of famine in Hawai'i, the edible part wasn't considered all that tasty.", "connoisseurs describe the flavor of the slimy green interior as a cross between cucumber, zucchini, and kiwifruit (though as it ripens, it tastes more like a banana). A fully ripened kiwano has an orange rind with prominent spikes. To eat plain, cut the fruit in half, as shown above.connoisseurs describe the flavor of the slimy green interior as a cross between cucumber, zucchini, and kiwifruit (though as it ripens, it tastes more like a banana). A fully ripened kiwano has an orange rind with prominent spikes. To eat plain, cut the fruit in half, as shown above.", "The starchy unripe fruit can be cooked in curries, while sweet, ripe jackfruit complements sticky rice and ice cream. You can get jackfruit chips, jackfruit noodles, jackfruit papad. Followers of American vegan-cooking blogs, on the other hand, will find unripe jackfruit compared, with confounding frequency, to “vegan pulled pork.”", "It's not very common in North America, but if you grew up in Southeast Asia, chances are you're familiar with this sweet yet tangy tropical fruit. The mangosteen is a nearly spherical fruit with a thick, inedible deep purple skin, a succulent white segmented interior, and a thick, cartoonish green stem", "Dragonfruit (pitaya) doesn't have much taste. The best way I can describe it, is kind of like a white kiwi - in terms of consistency/flavor. Usually not very sweet (like a kiwi). Tends to be more bland/subtle (once in a while somewhat sweet).", "Native to the Malay Archipelago, the name of this fruit is derived from the Malay word meaning 'hairy,' and you can see why. But once the hairy exterior of therambutan is peeled away, the tender, fleshy, delicious fruit is revealed. Its taste is described as sweet and sour, much like a grape.", "In fact, it's an edible flower from the family that includes broccoli, cauliflower, Brussels sprouts, and cabbage. It tastes very similar to cauliflower, but with a slightly nuttier, earthier flavor."];
@@ -44,7 +46,17 @@ SiteManager.prototype.addGood = function(name, desc, quantity, price, imglink) {
   var newGood = new Good(name, desc, quantity, price, imglink, index);
   this.goods.push(newGood);
 }
-
+SiteManager.prototype.authorizedAccount = function(userName, userPassword) {
+  for (var i=0; i<=this.accounts.length; i++) {
+    if (this.accounts.length === 0) {
+      return false;
+    } else if (this.accounts[i].password === userPassword&& this.accounts[i].userName === userName) {
+      return this.accounts[i];
+    } else if (i === this.accounts.length - 1) {
+      return 24;
+    }
+  }
+}
 Good.prototype.decreaseAmount = function(amount){
   if(isNaN(amount) === true){
     alert("please enter a quantity");
@@ -59,10 +71,11 @@ Good.prototype.decreaseAmount = function(amount){
   return amount;
 }
 
-NewAccount.prototype.fullName = function() {
+Account.prototype.fullName = function() {
   // console.log('yo');
   return this.first + ' ' + this.last;
 }
+
 
 //User Interface
 $(document).ready(function() {
@@ -127,15 +140,16 @@ $(document).ready(function() {
     var verified = testPassword(pswd, pswdConfirm);
     //If verified, create new Object
     if (verified) {
-      var accountHolder = new NewAccount(first, second, newUserName, pswd)
-      accountBank.push(accountHolder);
+      var accountHolder = new Account(first, second, newUserName, pswd)
+      siteManager.accounts.push(accountHolder);
+      console.log(siteManager.accounts);
     } else {
       alert("Please enter a valid password");
     }
 
     $('.form-group input').val(''); //Reset form fields
     $("#productDisplay").show();
-    $("#signInScreen").hide();
+    // $("#signInScreen").hide();
 
     });
 
@@ -166,13 +180,26 @@ $(document).ready(function() {
       $('.itemName').text(goodsArray[index].goodName);
       $('.itemSubtotal').text( newCartItem.subTotal() );
 
-
-
       $(".usersCart").show();
   });
 
   $("#signIn").submit(function(event) {
     event.preventDefault();
+    var userName = $("#userName").val();
+    var userPassword = $("#userPassword").val();
+    var authorized = siteManager.authorizedAccount(userName, userPassword);
+    console.log(authorized);
+
+    if (!authorized) {
+      alert('We have no friends, please make an account');
+    } else if (authorized === 42) {
+      alert('Please enter a valid input');
+    } else {
+      console.log("Welcome back, " + authorized.first);
+    }
+    siteManager.currentShopper.push(authorized);
+
+
   });
 
 });
