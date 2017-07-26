@@ -61,6 +61,7 @@ SiteManager.prototype.authorizedAccount = function(userName, userPassword) {
       return false;
     //Look for matching userName and password
     } else if (this.accounts[i].password === userPassword&& this.accounts[i].userName === userName) {
+      this.currentShopper.push(this.accounts[i]);
       return this.accounts[i];
     //If end of array is reached, return null
     } else if (i === this.accounts.length - 1) {
@@ -72,6 +73,7 @@ SiteManager.prototype.goodToCart = function(goodID, amount){
   if (this.goods[goodID].decreaseAmount(amount) === 0) {
     return 0;
   }
+  console.log("amount :" + amount + " name: " + this.currentShopper[0].first);
   this.currentShopper[0].addToCart(amount, this.goods[goodID]);
 }
 //will remove a specific amount of good(s) from the checkout cart and return it to the goods array
@@ -132,6 +134,11 @@ $(document).ready(function() {
   var siteManager = new SiteManager();
   populateGoods(siteManager);
   var goodsArray = siteManager.goods;
+
+  //Display the backend goods to the HTML on DOCready
+  var goods = showProducts(goodsArray);
+  $('#productDisplay').html(goods);
+
   function showProducts(productArray) {
     var colCount = 3;
     var output = "";
@@ -151,10 +158,10 @@ $(document).ready(function() {
                     '<div class="panel-body">'+
                       '<p>' + productArray[i].goodDesc + '</p>' +
                       '<p>' + productArray[i].price + '</p>' +
-                      '<form class="form-group">' +
+                      '<form class="form-group products">' +
                         '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
-                        '<input type = "number" id= "'+ productArray[i].goodID +' ">'+
-                        '<button class"btn btn-info">"Add to Cart!"</button'+
+                        '<input type = "number" id= "'+ productArray[i].goodID +' " placeholder="1">'+
+                        '<button class="btn btn-info">Add to Cart!</button'+
                       '</form>'+
                     '</div>'+
                   '</div>'+
@@ -170,7 +177,6 @@ $(document).ready(function() {
     }
     return output;
   }
-  $('#productDisplay').html( showProducts(goodsArray) );
 
   $('#newAccount').submit(function(event) {
     event.preventDefault();
@@ -185,43 +191,19 @@ $(document).ready(function() {
     if (verified) {
       var accountHolder = new Account(first, second, newUserName, pswd)
       siteManager.accounts.push(accountHolder);
+      siteManager.currentShopper[0] = accountHolder;
+      $("#productDisplay").show(); //Show the hidden products
       console.log(siteManager.accounts);
     } else {
       alert("Please enter a valid password");
     }
-    $('.form-group input').val(''); //Reset form fields
-    $("#productDisplay").show(); //Show the hidden products
-    $("#signInScreen").hide(); //Hide both sign in screens
-
+    // $('.form-group input').val(''); //Reset form fields
     });
-    $(".products").submit(function(event) {
-      event.preventDefault();
-      var quantityPurchased = parseInt ($(this).find('input').val() );
-      var index = parseInt ( $(this).find('input').attr('id') );
-      var thisGuy = goodsArray[index];
-      console.log( thisGuy );
-      var thisPrice = thisGuy.price;
-      console.log(this);
-
-
-      thisGuy.decreaseAmount(quantityPurchased);
-      var newParValue = thisGuy.quantity;
-
-      var newCartItem = new CartItem (quantityPurchased, thisPrice);
-
-      function CartItem (amount, price) {
-        this.amount = amount;
-        this.price = price;
-      }
-      CartItem.prototype.subTotal = function() {
-          return this.amount * this.price;
-      }
-      userCart.push( thisGuy.goodName, newCartItem.subTotal() );
-      $('.itemAmount').text(quantityPurchased);
-      $('.itemName').text(goodsArray[index].goodName);
-      $('.itemSubtotal').text( newCartItem.subTotal() );
-
-      $(".usersCart").show();
+  $(".products").submit(function(event) {
+    event.preventDefault();
+    var quantityPurchased = parseInt ($(this).find('input').val() );
+    var index = parseInt ( $(this).find('input').attr('id') );
+    siteManager.goodToCart(index, quantityPurchased);
   });
   //Check backend storage for matching account
   $("#signIn").submit(function(event) {
@@ -235,13 +217,12 @@ $(document).ready(function() {
     } else if (authorized === 42) {
       alert('Please enter a valid input');
     } else {
-      //If account verified, push object to currentShopper and hide input fields
-      siteManager.currentShopper.push(authorized);
       $('.form-group input').val(''); //Reset form fields
       $('.welcomeScreen').show();
       // $('.displayName').text(authorized.first);
       $("#productDisplay").show();
       $("#signInScreen").hide();
+      console.log(siteManager.currentShopper);
     }
   });
 });
