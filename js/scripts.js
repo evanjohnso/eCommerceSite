@@ -190,13 +190,19 @@ $(document).ready(function() {
     //If verified, create new Object
     if (verified) {
       var accountHolder = new Account(first, second, newUserName, pswd)
+      siteManager.currentShopper.push(accountHolder);
       siteManager.accounts.push(accountHolder);
       siteManager.currentShopper[0] = accountHolder;
       $("#productDisplay").show(); //Show the hidden products
       console.log(siteManager.accounts);
+      console.log(siteManager.currentShopper);
     } else {
       alert("Please enter a valid password");
     }
+
+      // click(function(event){
+      //   d
+      // })
     // $('.form-group input').val(''); //Reset form fields
     });
   $(".products").submit(function(event) {
@@ -222,7 +228,18 @@ $(document).ready(function() {
       // $('.displayName').text(authorized.first);
       $("#productDisplay").show();
       $("#signInScreen").hide();
-      console.log(siteManager.currentShopper);
+
     }
+  });
+  console.log(siteManager.currentShopper);
+  $('#logOutButton').click(function(event) {
+    event.preventDefault();
+    console.log(siteManager.accounts);
+    console.log(siteManager.currentShopper);
+    siteManager.currentShopper.length = 0;
+    console.log(siteManager.currentShopper);
+
+    $('#productDisplay').hide();
+    alert('peace mothafucka');
   });
 });
