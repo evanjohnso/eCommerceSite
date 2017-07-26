@@ -15,12 +15,13 @@ function Good(name, desc, quantity, price, imglink, id){
   this.imgLink = imglink;
   this.goodID = id;
 }
-function Account(first, last, userName, password) {
+function Account(first, last, userName, password, id) {
   this.first = first;
   this.last = last;
   this.userName = userName;
   this.password = password;
   this.cart = [];
+  this.accountID = id;
 }
 //Functions
 function testPassword(first, second) {
@@ -41,11 +42,16 @@ function populateGoods(sitemanager){
     sitemanager.addGood(name[i], desc[i], quantity[i], price[i], imglink[i]);
   }
 }
-
+// prototypes
 SiteManager.prototype.addGood = function(name, desc, quantity, price, imglink) {
   var index = this.goods.length;
   var newGood = new Good(name, desc, quantity, price, imglink, index);
   this.goods.push(newGood);
+}
+SiteManager.prototype.addAccount = function(first , last, userName, password) {
+  var id = this.accounts.length;
+  var account = new Account(first, last, userName, password, id);
+  this.accounts.push(account);
 }
 SiteManager.prototype.authorizedAccount = function(userName, userPassword) {
   //Loop through all accounts for matching name
@@ -62,6 +68,13 @@ SiteManager.prototype.authorizedAccount = function(userName, userPassword) {
     }
   }
 }
+Good.prototype.increaseAmount = function(amount){
+  if (isNaN(amount) === true){
+    return 0;
+  }
+  this.quantity += amount;
+  return 1;
+}
 Good.prototype.decreaseAmount = function(amount){
   if(isNaN(amount) === true){
     // alert("please enter a quantity");
@@ -75,7 +88,24 @@ Good.prototype.decreaseAmount = function(amount){
   this.quantity -= amount;
   return amount;
 }
+Account.prototype.addToCart = function(amount, inputGood){
+  var index = this.cart.length;
+  var newGood = new Good(inputGood.goodName, inputGood.goodDesc, amount, inputGood.price, inputGood.imgLink, index);
+  newGood.oldID = inputGood.goodID; //hold on to the old id that references its place in the goods array
+  Account.cart.push(newGood);
+}
+Account.prototype.removeFromCart = function(cartIndex, amount){
+  if (this.cart[cartIndex].quantity < amount) {
+    return 0;
+  }
 
+  if(this.cart[cartIndex].quantity === amount){
+    this.cart.splice(cartIndex, 1);
+    return amount;
+  }
+  this.cart[cartIndex].decreaseAmount(amount);
+  return amount;
+}
 //User Interface
 $(document).ready(function() {
   var siteManager = new SiteManager();
