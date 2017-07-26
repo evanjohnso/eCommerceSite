@@ -150,6 +150,7 @@ $(document).ready(function() {
       //   d
       // })
     // $('.form-group input').val(''); //Reset form fields
+    $("#signUpButton").modal('toggle');
     });
     $(".products").submit(function(event) {
       event.preventDefault();
@@ -197,7 +198,6 @@ $(document).ready(function() {
       // $('.displayName').text(authorized.first);
       $("#productDisplay").show();
       $("#signInScreen").hide();
-
     }
   });
   console.log(siteManager.currentShopper);
