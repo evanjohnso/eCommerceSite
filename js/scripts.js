@@ -20,6 +20,7 @@ function Account(first, last, userName, password) {
   this.last = last;
   this.userName = userName;
   this.password = password;
+  this.cart = [];
 }
 //Functions
 function testPassword(first, second) {
@@ -47,91 +48,45 @@ SiteManager.prototype.addGood = function(name, desc, quantity, price, imglink) {
   this.goods.push(newGood);
 }
 SiteManager.prototype.authorizedAccount = function(userName, userPassword) {
-  for (var i=0; i<=this.accounts.length; i++) {
+  //Loop through all accounts for matching name
+  for (var i=0; i <= this.accounts.length; i++) {
+    //If no accounts, return false to UI
     if (this.accounts.length === 0) {
       return false;
+    //Look for matching userName and password
     } else if (this.accounts[i].password === userPassword&& this.accounts[i].userName === userName) {
       return this.accounts[i];
+    //If end of array is reached, return null
     } else if (i === this.accounts.length - 1) {
-      return 24;
+      return 42;
     }
   }
 }
 Good.prototype.decreaseAmount = function(amount){
   if(isNaN(amount) === true){
-    alert("please enter a quantity");
+    // alert("please enter a quantity");
     return 0;
   }
   var newAmount = this.quantity - amount;
   if(newAmount < 0){
-    alert("Not enough inventory");
+    // alert("Not enough inventory");
     return 0;
   }
   this.quantity -= amount;
   return amount;
 }
 
-Account.prototype.fullName = function() {
-  // console.log('yo');
-  return this.first + ' ' + this.last;
-}
-
-
 //User Interface
 $(document).ready(function() {
   var siteManager = new SiteManager();
   populateGoods(siteManager);
   var goodsArray = siteManager.goods;
-  // console.log(goodsArray);
-  var accountBank = []; //Hold accounts in array
-  var userCart = [];
-
-  function showProducts(productArray) {
-    var colCount = 3;
-    var output = "";
-
-    for (var i =0; i < productArray.length; i++) {
-      if(colCount === 3){
-        output += '<div class="row">' //start a new row when 3 columns
-      }
-      output += '<div class ="col-md-4">' +
-                  '<div class="panel panel-default">' +
-                    '<div class="panel-heading">' +
-                      '<p class="style1">' +
-                      productArray[i].goodName +
-                      '</p>'+
-                      '<img src="' + productArray[i].imgLink + '" alt="broken" class="fruitPic"/>' +
-                    '</div>'+
-                    '<div class="panel-body">'+
-                      '<p>' + productArray[i].goodDesc + '</p>' +
-                      '<p>' + productArray[i].price + '</p>' +
-                      '<form class="form-group products">' +
-                        '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
-                        '<input type = "number" id= "'+ productArray[i].goodID +'" placeholder="1">'+
-                        '<button type="submit" class="btn btn-warning addCart' + productArray[i].goodID +'">Add to Cart!</button>'+
-                      '</form>'+
-                    '</div>'+
-                  '</div>'+
-                '</div>';
-      colCount--;
-      if (colCount === 0) {
-        output += '</div>'; //When three columns, add closing div for row
-        colCount = 3;
-      }
-    }
-    if (productArray.length%3 !== 0) {
-      output += '</div>';
-    }
-    return output;
-  }
-  var ourProducts = showProducts(goodsArray) ;
-  $('#productDisplay').html(ourProducts);
-
+  //Display the backend goods to the HTML on DOCready
+  $('#productDisplay').html( showProducts(goodsArray) );
 
   $('#newAccount').submit(function(event) {
     event.preventDefault();
-    console.log(this);
-    //Take values
+    //Take values from user
     var first = $('#newFirstName').val();
     var second = $('#newLastName').val();
     var newUserName = $('#newUserName').val();
@@ -146,13 +101,11 @@ $(document).ready(function() {
     } else {
       alert("Please enter a valid password");
     }
-
     $('.form-group input').val(''); //Reset form fields
-    $("#productDisplay").show();
-    // $("#signInScreen").hide();
+    $("#productDisplay").show(); //Show the hidden products
+    $("#signInScreen").hide(); //Hide both sign in screens
 
     });
-
     $(".products").submit(function(event) {
       event.preventDefault();
       var quantityPurchased = parseInt ($(this).find('input').val() );
@@ -182,24 +135,26 @@ $(document).ready(function() {
 
       $(".usersCart").show();
   });
-
+  //Check backend storage for matching account
   $("#signIn").submit(function(event) {
     event.preventDefault();
     var userName = $("#userName").val();
     var userPassword = $("#userPassword").val();
     var authorized = siteManager.authorizedAccount(userName, userPassword);
-    console.log(authorized);
-
+    //From backend, either no accounts, no matching user/password, or valid and return that user
     if (!authorized) {
       alert('We have no friends, please make an account');
     } else if (authorized === 42) {
       alert('Please enter a valid input');
     } else {
-      console.log("Welcome back, " + authorized.first);
+      //If account verified, push object to currentShopper and hide input fields
+      siteManager.currentShopper.push(authorized);
+      $('.form-group input').val(''); //Reset form fields
+      $('.welcomeScreen').show();
+      // $('.displayName').text(authorized.first);
+      $("#productDisplay").show();
+      $("#signInScreen").hide();
     }
-    siteManager.currentShopper.push(authorized);
-
 
   });
-
 });
