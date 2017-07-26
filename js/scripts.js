@@ -134,7 +134,7 @@ $(document).ready(function() {
   var siteManager = new SiteManager();
   populateGoods(siteManager);
   var goodsArray = siteManager.goods;
-
+  $("#logOutButton").hide();
   //Display the backend goods to the HTML on DOCready
   var goods = showProducts(goodsArray);
   $('#productDisplay').html(goods);
@@ -204,12 +204,19 @@ $(document).ready(function() {
       //   d
       // })
     // $('.form-group input').val(''); //Reset form fields
+    $("#signUpButton").modal('toggle');
+
+    $("#logOutButton").show();
+    $("#btnSignUp").hide();
+    $("#btnSignIn").hide();
+
     });
   $(".products").submit(function(event) {
     event.preventDefault();
     var quantityPurchased = parseInt ($(this).find('input').val() );
     var index = parseInt ( $(this).find('input').attr('id') );
     siteManager.goodToCart(index, quantityPurchased);
+    $(this).find('input').val(' ');
   });
   //Check backend storage for matching account
   $("#signIn").submit(function(event) {
@@ -234,12 +241,13 @@ $(document).ready(function() {
   console.log(siteManager.currentShopper);
   $('#logOutButton').click(function(event) {
     event.preventDefault();
-    console.log(siteManager.accounts);
-    console.log(siteManager.currentShopper);
     siteManager.currentShopper.length = 0;
-    console.log(siteManager.currentShopper);
 
     $('#productDisplay').hide();
+    $("#btnSignUp").show();
+    $("#btnSignIn").show();
+    $("#logOutButton").hide();
+
     alert('peace mothafucka');
   });
 });
