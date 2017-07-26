@@ -6,15 +6,14 @@ function SiteManager(){
 }
 
 SiteManager.prototype.authorizedAccount = function (userName, password) {
-  var bank = this.accounts;
-  console.log(bank);
   //Loop through all accounts for matching name
-  for (var i = 0; i <= bank.length; i ++) {
+  for (var i = 0; i <= this.accounts.length; i ++) {
     if (this.accounts[i].userName == userName && password == this.accounts[i].password) {
-      console.log(bank[i]);
-      return alert('hello there ' + userName)
-    } else if (i == bank.length - 1) {
-      console.log('please enter a valid input');
+      console.log(this.accounts[i]);
+      return this.accounts[i]; //return the users account
+    } else if (i == this.accounts.length - 1) {
+      console.log('not in this array mate');
+      return false;
     }
   }
 }
@@ -145,7 +144,7 @@ $(document).ready(function() {
       var accountHolder = new NewAccount(first, second, newUserName, pswd)
       //Push new account to sitemanager for storage
       siteManager.accounts.push(accountHolder);
-      siteManager.authorizedAccount();
+      console.log(siteManager.accounts)
 
       // $("#productDisplay").show();
       // $("#signInScreen").hide();
@@ -193,7 +192,8 @@ $(document).ready(function() {
     event.preventDefault();
     var returnUser = $('#userName').val();
     var returnPassword = $('#userPassword').val();
-    console.log(accountBank);
+    var findit = siteManager.authorizedAccount(returnUser, returnPassword);
+    console.log(findit);
 
   });
 });
