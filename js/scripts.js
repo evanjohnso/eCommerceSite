@@ -155,6 +155,5 @@ $(document).ready(function() {
       $("#productDisplay").show();
       $("#signInScreen").hide();
     }
-
   });
 });
