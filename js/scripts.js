@@ -33,19 +33,20 @@ function testPassword(first, second) {
 }
 SiteManager.prototype.uniqueUserName = function (uniqueName) {
   if (this.accounts.length === 0) {
+    console.log('this length is 0');
     return true;
-  } else {
-    for (var i = 0; i <= this.accounts.length; i++) {
+  } else if (this.accounts.length > 0) {
+    for (var i = 0; i < this.accounts.length; i++) {
       if (this.accounts[i].userName === uniqueName) {
+        console.log('this name is taken');
         return false;
-      } else {
-        return true;
       }
     }
+
   }
 }
 function populateGoods(sitemanager){
-  var name = ["Ackee", "Buddhas Hand", "Hala Aka Puhala Tree Fruit", "Horned Melon", "Jackfruit", "Mangosteen", "Pitaya", "Rambutan", "Romanesco Broccoli"];
+  var name = ["Ackee", "Buddhas Hand", "HalaAkaPuhala Fruit", "Horned Melon", "Jackfruit", "Mangosteen", "Pitaya", "Rambutan", "Romanesco Broccoli"];
   var desc = ["So what does ackee taste like? It's completely unique. The fruit has a buttery, creamy texture and a mildtaste that reminded me of hearts of palm. The saltfish in the dish plays off the mild fruit nicely, adding a saline tang.", "Though it looks like a lemon gone wild, the Buddha's hand is actually a distinct fruit in the citron family. It has a sweet, lemon blossom aroma and no juice or pulp. The mild-tasting pith is not bitter, so the fruit can be zested or used whole.", "Although the hala fruit was indeed eaten in times of famine in Hawai'i, the edible part wasn't considered all that tasty.", "connoisseurs describe the flavor of the slimy green interior as a cross between cucumber, zucchini, and kiwifruit (though as it ripens, it tastes more like a banana). A fully ripened kiwano has an orange rind with prominent spikes. To eat plain, cut the fruit in half, as shown above. connoisseurs describe the flavor of the slimy green interior as a cross between cucumber, zucchini, and kiwifruit (though as it ripens, it tastes more like a banana). A fully ripened kiwano has an orange rind with prominent spikes. To eat plain, cut the fruit in half, as shown above.", "The starchy unripe fruit can be cooked in curries, while sweet, ripe jackfruit complements sticky rice and ice cream. You can get jackfruit chips, jackfruit noodles, jackfruit papad. Followers of American vegan-cooking blogs, on the other hand, will find unripe jackfruit compared, with confounding frequency, to 'vegan pulled pork'.", "It's not very common in North America, but if you grew up in Southeast Asia, chances are you're familiar with this sweet yet tangy tropical fruit. The mangosteen is a nearly spherical fruit with a thick, inedible deep purple skin, a succulent white segmented interior, and a thick, cartoonish green stem", "Dragonfruit (pitaya) doesn't have much taste. The best way I can describe it, is kind of like a white kiwi - in terms of consistency/flavor. Usually not very sweet (like a kiwi). Tends to be more bland/subtle (once in a while somewhat sweet).", "Native to the Malay Archipelago, the name of this fruit is derived from the Malay word meaning 'hairy,' and you can see why. But once the hairy exterior of therambutan is peeled away, the tender, fleshy, delicious fruit is revealed. Its taste is described as sweet and sour, much like a grape.", "In fact, it's an edible flower from the family that includes broccoli, cauliflower, Brussels sprouts, and cabbage. It tastes very similar to cauliflower, but with a slightly nuttier, earthier flavor."];
   var quantity = [12, 12, 12, 12, 12, 12, 12, 12, 12];
   var price = [1.25, 1.25, 1.25, 2.75, 2.75, 2.75, 3.50, 3.50, 3.50];
@@ -86,7 +87,7 @@ SiteManager.prototype.goodToCart = function(goodID, amount){
   if (this.goods[goodID].decreaseAmount(amount) === 0) {
     return 0;
   }
-  console.log("amount: " + amount + " name: " + this.currentShopper[0].first);
+
   this.currentShopper[0].addToCart(amount, this.goods[goodID]);
   console.log( this.currentShopper[0] );
 }
@@ -169,7 +170,7 @@ $(document).ready(function() {
         output += '<div class="row">' //start a new row when 3 columns
       }
       output += '<div class ="col-md-4">' +
-                  '<div class="panel panel-default">' +
+                  '<div class="panel panel-default" id= "'+ productArray[i].goodID +'j">' +
                     '<div class="panel-heading">' +
                       '<p class="style1">' +
                       productArray[i].goodName +
@@ -182,7 +183,7 @@ $(document).ready(function() {
                       '<form class="form-group products">' +
                         '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
                         '<input type = "number" id= "'+ productArray[i].goodID +' " placeholder="1">'+
-                        '<button class="btn btn-info">Add to Cart!</button>'+
+                        '<button class="btn btn-info center-block">Add to Cart!</button>'+
                       '</form>'+
                     '</div>'+
                   '</div>'+
@@ -245,6 +246,7 @@ $(document).ready(function() {
     var quantityPurchased = parseInt ($(this).find('input').val() );
     var index = parseInt ( $(this).find('input').attr('id') );
     siteManager.goodToCart(index, quantityPurchased);
+<<<<<<< HEAD
     console.log ( siteManager.goods[index].goodName );
     console.log ( siteManager.goods[index].price );
 
@@ -268,6 +270,15 @@ $(document).ready(function() {
                             '</div>');
 
     $(this).find('input').val(' ');
+=======
+    $(this).find('input').val('');
+    console.log(siteManager.currentShopper[0]);
+    if(siteManager.goods[index].quantity <= 0){
+      console.log("index :" + index);
+      $('#' + index + "j").attr("class", "panel panel-danger");
+      $("#" + index + "j .style1").text(siteManager.goods[index].goodName + "-SOLD OUT");
+    }
+>>>>>>> ebef241dfce2669bfe5b40a12ac8c109f9ad5e5e
   });
 
 
