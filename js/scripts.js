@@ -101,6 +101,8 @@ SiteManager.prototype.cartToGood = function(goodID, amount){
   this.goods[oldGoodId].increaseAmount(amount);
 }
 
+
+
 Good.prototype.increaseAmount = function(amount){
   if (isNaN(amount) === true){
     return 0;
@@ -121,6 +123,12 @@ Good.prototype.decreaseAmount = function(amount){
 }
 Account.prototype.addToCart = function(amount, inputGood){
   var index = this.cart.length;
+  for(var i = 0; i < index; i++){
+    if(inputGood.goodName === this.cart[i].goodName){
+      this.cart[i].increaseAmount(amount);
+      return 1;
+    }
+  }
   var newGood = new Good(inputGood.goodName, inputGood.goodDesc, amount, inputGood.price, inputGood.imgLink, index);
   newGood.oldID = inputGood.goodID; //hold on to the old id that references its place in the goods array
   this.cart.push(newGood);
@@ -197,7 +205,7 @@ $(document).ready(function() {
   function showCartItems() {
     var output = "";
     for (var i =0; i < siteManager.currentShopper[0].cart.length; i++) {
-      var subTotal =
+      var subTotal = siteManager.currentShopper[0].cart[i].quantity * siteManager.currentShopper[0].cart[i].price;
       output += '<div class="row">' +
                                 '<div class="col-sm-3">' +
                                   '<p>Name: '+ siteManager.currentShopper[0].cart[i].goodName + '</p>' +
@@ -209,7 +217,7 @@ $(document).ready(function() {
                                   '<p>Price: ' + siteManager.currentShopper[0].cart[i].price + '</p>'+
                                 '</div>'+
                                 '<div class="col-sm-3">'+
-                                  '<p>Subtotal: ' + (siteManager.currentShopper[0].cart[i].quantity * siteManager.currentShopper[0].cart[i].price) + '</p>' +
+                                  '<p>Subtotal: ' + subTotal + '</p>' +
                                 '</div>'+
                               '</div>';
     }
