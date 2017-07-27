@@ -48,8 +48,8 @@ SiteManager.prototype.uniqueUserName = function (uniqueName) {
 function populateGoods(sitemanager){
   var name = ["Ackee", "Buddhas Hand", "HalaAkaPuhala", "Horned Melon", "Jackfruit", "Mangosteen", "Pitaya", "Rambutan", "Romanesco Broccoli"];
   var desc = ["So what does ackee taste like? It's completely unique. The fruit has a buttery, creamy texture and a mildtaste that reminded me of hearts of palm. The saltfish in the dish plays off the mild fruit nicely, adding a saline tang.", "Though it looks like a lemon gone wild, the Buddha's hand is actually a distinct fruit in the citron family. It has a sweet, lemon blossom aroma and no juice or pulp. The mild-tasting pith is not bitter, so the fruit can be zested or used whole.", "Although the hala fruit was indeed eaten in times of famine in Hawai'i, the edible part wasn't considered all that tasty.", "connoisseurs describe the flavor of the slimy green interior as a cross between cucumber, zucchini, and kiwifruit (though as it ripens, it tastes more like a banana). A fully ripened kiwano has an orange rind with prominent spikes. To eat plain, cut the fruit in half, as shown above. Connoisseurs describe the flavor of the slimy green interior as a cross between cucumber, zucchini, and kiwifruit (though as it ripens, it tastes more like a banana). A fully ripened kiwano has an orange rind with prominent spikes.", "The starchy unripe fruit can be cooked in curries, while sweet, ripe jackfruit complements sticky rice and ice cream. You can get jackfruit chips, jackfruit noodles, jackfruit papad. Followers of American vegan-cooking blogs, on the other hand, will find unripe jackfruit compared, with confounding frequency, to 'vegan pulled pork'.", "It's not very common in North America, but if you grew up in Southeast Asia, chances are you're familiar with this sweet yet tangy tropical fruit. The mangosteen is a nearly spherical fruit with a thick, inedible deep purple skin, a succulent white segmented interior, and a thick, cartoonish green stem", "Dragonfruit (pitaya) doesn't have much taste. The best way I can describe it, is kind of like a white kiwi - in terms of consistency/flavor. Usually not very sweet (like a kiwi). Tends to be more bland/subtle (once in a while somewhat sweet).", "Native to the Malay Archipelago, the name of this fruit is derived from the Malay word meaning 'hairy,' and you can see why. But once the hairy exterior of therambutan is peeled away, the tender, fleshy, delicious fruit is revealed. Its taste is described as sweet and sour, much like a grape.", "In fact, it's an edible flower from the family that includes broccoli, cauliflower, Brussels sprouts, and cabbage. It tastes very similar to cauliflower, but with a slightly nuttier, earthier flavor."];
-  var quantity = [12, 12, 12, 12, 12, 12, 12, 12, 12];
-  var price = [1.25, 1.25, 1.25, 2.75, 2.75, 2.75, 3.50, 3.50, 3.50];
+  var quantity = [5, 2, 12, 100, 12, 4, 15, 300, 12];
+  var price = [1.99, 250.00, 4.25, .75, 2.75, 2.75, 3.50, .99, 3.00];
   var imglink = ["img/ackee.jpg", "img/buddhas.hand.jpg", "img/hala.aka.puhala.tree.fruit.jpg", "img/horned.melon.jpg", "img/jackfruit.jpg", "img/mangosteen.jpg", "img/pitaya.jpg", "img/rambutan.jpg", "img/romanesco.broccoli.jpg"];
 
   for (var i=0; i < name.length; i++){
@@ -282,36 +282,23 @@ $(document).ready(function() {
     var subTotal = siteManager.goods[index].price * quantityPurchased;
 
     var lastIndex = (siteManager.currentShopper[0].cart.length) - 1;
-    if(success === 1){
-      // $('#cartItems').append('<div class="row">' +
-      //                           '<div class="col-sm-3">' +
-      //                             '<p>Name: '+ siteManager.currentShopper[0].cart[lastIndex].goodName + '</p>' +
-      //                           '</div>' +
-      //                           '<div class="col-sm-3">' +
-      //                             '<p>Quantity: ' + siteManager.currentShopper[0].cart[lastIndex].quantity + '</p>' +
-      //                           '</div>' +
-      //                           '<div class="col-sm-3">' +
-      //                             '<p>Price: ' + siteManager.currentShopper[0].cart[lastIndex].price + '</p>'+
-      //                           '</div>'+
-      //                           '<div class="col-sm-3">'+
-      //                             '<p>Subtotal: ' + (siteManager.currentShopper[0].cart[lastIndex].quantity * siteManager.currentShopper[0].cart[lastIndex].price) + '</p>' +
-      //                           '</div>'+
-      //                         '</div>');
+    //If current stock is available, proceed, if not, alert
+    if(success === 1) {
       var output = showCartItems();
       $('#cartItems').html(output);
+    } else {
+      alert('Sorry, we do not have the inventory to complete your request');
     }
+    //Reset input field
     $(this).find('input').val('');
     console.log(siteManager.currentShopper[0]);
+    //If the products storage is 0, change the visual panel to out of stock
     if(siteManager.goods[index].quantity <= 0){
       console.log("index :" + index);
       $('#' + index + "j").attr("class", "panel panel-danger");
       $("#" + index + "j .style1").text(siteManager.goods[index].goodName + "-SOLD OUT");
     }
   });
-
-
-
-
 
   //Check backend storage for matching account
   $("#signIn").submit(function(event) {
@@ -351,14 +338,13 @@ $(document).ready(function() {
     $("#btnSignUp").show();
     $("#btnSignIn").show();
     $("#logOutButton").hide();
-
+    $('#receipt').hide();
     $("#userCart").hide();
   });
   //Checkout Button Functionality
   $('#btnCheckout').click(function(event) {
     event.preventDefault();
-    // siteManager.currentShopper[0].totalCart();
-    alert( siteManager.currentShopper[0].totalCart() );
+
     $('.currentCartName').text(siteManager.currentShopper[0].first);
     $('.checkoutTotal').text(siteManager.currentShopper[0].totalCart() );
     $("#productDisplay").hide(); //Show the hidden products
