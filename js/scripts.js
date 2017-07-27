@@ -86,8 +86,9 @@ SiteManager.prototype.goodToCart = function(goodID, amount){
   if (this.goods[goodID].decreaseAmount(amount) === 0) {
     return 0;
   }
-  console.log("amount :" + amount + " name: " + this.currentShopper[0].first);
+  console.log("amount: " + amount + " name: " + this.currentShopper[0].first);
   this.currentShopper[0].addToCart(amount, this.goods[goodID]);
+  console.log( this.currentShopper[0] );
 }
 //will remove a specific amount of good(s) from the checkout cart and return it to the goods array
 SiteManager.prototype.cartToGood = function(goodID, amount){
@@ -97,6 +98,7 @@ SiteManager.prototype.cartToGood = function(goodID, amount){
   }
   this.goods[oldGoodId].increaseAmount(amount);
 }
+
 Good.prototype.increaseAmount = function(amount){
   if (isNaN(amount) === true){
     return 0;
@@ -138,6 +140,7 @@ Account.prototype.totalCart = function() {
   for(var i=0; i < this.cart.length; i++){
     total += (this.cart[i].price * this.cart[i].quantity);
   }
+  this.cart.length = 0;
   return total;
 }
 //User Interface
@@ -149,6 +152,13 @@ $(document).ready(function() {
   //Display the backend goods to the HTML on DOCready
   var goods = showProducts(goodsArray);
   $('#productDisplay').html(goods);
+
+
+
+
+
+
+
 
   function showProducts(productArray) {
     var colCount = 3;
@@ -235,8 +245,35 @@ $(document).ready(function() {
     var quantityPurchased = parseInt ($(this).find('input').val() );
     var index = parseInt ( $(this).find('input').attr('id') );
     siteManager.goodToCart(index, quantityPurchased);
+    console.log ( siteManager.goods[index].goodName );
+    console.log ( siteManager.goods[index].price );
+
+    var goodName = siteManager.goods[index].goodName
+    var goodPrice = siteManager.goods[index].price
+    var subTotal = siteManager.goods[index].price * quantityPurchased;
+
+    $('#cartItems').append('<div class="row">' +
+                              '<div class="col-sm-3">' +
+                                '<p>Name: '+ goodName + '</p>' +
+                              '</div>' +
+                              '<div class="col-sm-3">' +
+                                '<p>Quantity: ' + quantityPurchased + '</p>' +
+                              '</div>' +
+                              '<div class="col-sm-3">' +
+                                '<p>Price: ' + goodPrice + '</p>'+
+                              '</div>'+
+                              '<div class="col-sm-3">'+
+                                '<p>Subtotal: ' + subTotal + '</p>' +
+                              '</div>'+
+                            '</div>');
+
     $(this).find('input').val(' ');
   });
+
+
+
+
+
   //Check backend storage for matching account
   $("#signIn").submit(function(event) {
     event.preventDefault();
