@@ -76,6 +76,7 @@ div .jumbotron h1 {
   background-color: darkgrey;
   border-radius: 4%;
   padding-bottom: 1em;
+  display: none;
 }
 
 #userCart p {
@@ -108,4 +109,11 @@ div .jumbotron h1 {
 }
 .panel-body .btn {
   margin-top:
+}
+
+#receipt {
+  /*display: none;*/
+  border: 3px solid black;
+  margin: auto;
+  text-align: center;
 }

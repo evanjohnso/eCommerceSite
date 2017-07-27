@@ -142,7 +142,7 @@ Account.prototype.totalCart = function() {
   for(var i=0; i < this.cart.length; i++){
     total += (this.cart[i].price * this.cart[i].quantity);
   }
-  // this.cart.length = 0;
+  this.cart.length = 0;
   return total;
 }
 //User Interface
@@ -154,13 +154,6 @@ $(document).ready(function() {
   //Display the backend goods to the HTML on DOCready
   var goods = showProducts(goodsArray);
   $('#productDisplay').html(goods);
-
-
-
-
-
-
-
 
   function showProducts(productArray) {
     var colCount = 3;
@@ -225,6 +218,7 @@ $(document).ready(function() {
         $("#logOutButton").show(); //Display logOutButton
         $("#btnSignUp").hide(); //Hide signUpButton
         $("#btnSignIn").hide(); //Hide signIn
+        $('#userCart').show();
         console.log("this is account bank ");
         console.log(siteManager.accounts);
         console.log("this is current shopper ");
@@ -305,6 +299,7 @@ $(document).ready(function() {
       $("#logOutButton").show(); //Display logOutButton
       $("#btnSignUp").hide(); //Hide signUpButton
       $("#btnSignIn").hide(); //Hide signIn
+      $('#userCart').show();
     }
     console.log("this is account bank ");
     console.log(siteManager.accounts);
@@ -319,13 +314,25 @@ $(document).ready(function() {
     $("#btnSignUp").show();
     $("#btnSignIn").show();
     $("#logOutButton").hide();
+    $('#userCart').hide();
     console.log("this is current shopper ");
     console.log(siteManager.currentShopper);
   });
   //Checkout Button Functionality
   $('#btnCheckout').click(function(event) {
     event.preventDefault();
-    siteManager.currentShopper[0].totalCart();
+    // siteManager.currentShopper[0].totalCart();
     alert( siteManager.currentShopper[0].totalCart() );
+    $('.currentCartName').text(siteManager.currentShopper[0].first);
+    $('.checkoutTotal').text(siteManager.currentShopper[0].totalCart() );
+    $("#productDisplay").hide(); //Show the hidden products
+    $('#userCart').hide();
+    $('#receipt').show();
+  });
+  $('#btnContinue').click(function(event) {
+    event.preventDefault();
+    $('#productDisplay').show();
+    $('#receipt').hide();
+    $('#userCart').show();
   });
 });
