@@ -184,7 +184,7 @@ $(document).ready(function() {
                       '<p class="priceStyle">$' + productArray[i].price + '</p>' +
                       '<form class="form-group products">' +
                         '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
-                        '<input type = "number" id= "'+ productArray[i].goodID +' " placeholder="1">'+
+                        '<input type = "number" id= "'+ productArray[i].goodID +' " value="1" min="0">'+
                         '<button class="btn btn-info center-block">Add to Cart!</button>'+
                       '</form>'+
                     '</div>'+
@@ -248,7 +248,6 @@ $(document).ready(function() {
         $("#logOutButton").show(); //Display logOutButton
         $("#btnSignUp").hide(); //Hide signUpButton
         $("#btnSignIn").hide(); //Hide signIn
-        $("#userCart").show();
         var output = showCartItems();
         $('#cartItems').html(output);
         $("#mission").hide();
@@ -300,6 +299,8 @@ $(document).ready(function() {
       $("#" + index + "j .style1").text(siteManager.goods[index].goodName + "-SOLD OUT");
     }
     $('[type=number]').val(1);
+    $("#userCart").show();
+
   });
 
   //Check backend storage for matching account
@@ -352,6 +353,8 @@ $(document).ready(function() {
     $("#productDisplay").hide(); //Show the hidden products
     $('#userCart').hide();
     $('#receipt').show();
+
+    //Reset the cart
     var output = showCartItems();
     $('#cartItems').html(output);
   });
