@@ -42,7 +42,7 @@ SiteManager.prototype.uniqueUserName = function (uniqueName) {
         return false;
       }
     }
-    return true;
+
   }
 }
 function populateGoods(sitemanager){
@@ -87,7 +87,7 @@ SiteManager.prototype.goodToCart = function(goodID, amount){
   if (this.goods[goodID].decreaseAmount(amount) === 0) {
     return 0;
   }
-  console.log("amount :" + amount + " name: " + this.currentShopper[0].first);
+  console.log("amount :" + amount + " name: " + this.goods[goodID].goodName);
   this.currentShopper[0].addToCart(amount, this.goods[goodID]);
 }
 //will remove a specific amount of good(s) from the checkout cart and return it to the goods array
@@ -160,7 +160,7 @@ $(document).ready(function() {
         output += '<div class="row">' //start a new row when 3 columns
       }
       output += '<div class ="col-md-4">' +
-                  '<div class="panel panel-default">' +
+                  '<div class="panel panel-default" id= "'+ productArray[i].goodID +'j">' +
                     '<div class="panel-heading">' +
                       '<p class="style1">' +
                       productArray[i].goodName +
@@ -236,7 +236,13 @@ $(document).ready(function() {
     var quantityPurchased = parseInt ($(this).find('input').val() );
     var index = parseInt ( $(this).find('input').attr('id') );
     siteManager.goodToCart(index, quantityPurchased);
-    $(this).find('input').val(' ');
+    $(this).find('input').val('');
+    console.log(siteManager.currentShopper[0]);
+    if(siteManager.goods[index].quantity <= 0){
+      console.log("index :" + index);
+      $('#' + index + "j").attr("class", "panel panel-danger");
+      $("#" + index + "j .style1").text(siteManager.goods[index].goodName + "-SOLD OUT");
+    }
   });
   //Check backend storage for matching account
   $("#signIn").submit(function(event) {
