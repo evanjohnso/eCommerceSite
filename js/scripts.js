@@ -140,7 +140,7 @@ Account.prototype.totalCart = function() {
   for(var i=0; i < this.cart.length; i++){
     total += (this.cart[i].price * this.cart[i].quantity);
   }
-  this.cart.length = 0;
+  // this.cart.length = 0;
   return total;
 }
 //User Interface
@@ -314,6 +314,7 @@ $(document).ready(function() {
   //Checkout Button Functionality
   $('#btnCheckout').click(function(event) {
     event.preventDefault();
-    alert('hello');
+    siteManager.currentShopper[0].totalCart();
+    alert( siteManager.currentShopper[0].totalCart() );
   });
 });
