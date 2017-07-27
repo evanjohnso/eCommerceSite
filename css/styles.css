@@ -112,8 +112,9 @@ div .jumbotron h1 {
 }
 
 #receipt {
-  /*display: none;*/
+  display: none;
   border: 3px solid black;
   margin: auto;
   text-align: center;
+  padding-bottom: 1em;
 }

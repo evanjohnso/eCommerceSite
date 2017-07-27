@@ -101,6 +101,8 @@ SiteManager.prototype.cartToGood = function(goodID, amount){
   this.goods[oldGoodId].increaseAmount(amount);
 }
 
+
+
 Good.prototype.increaseAmount = function(amount){
   if (isNaN(amount) === true){
     return 0;
@@ -121,6 +123,12 @@ Good.prototype.decreaseAmount = function(amount){
 }
 Account.prototype.addToCart = function(amount, inputGood){
   var index = this.cart.length;
+  for(var i = 0; i < index; i++){
+    if(inputGood.goodName === this.cart[i].goodName){
+      this.cart[i].increaseAmount(amount);
+      return 1;
+    }
+  }
   var newGood = new Good(inputGood.goodName, inputGood.goodDesc, amount, inputGood.price, inputGood.imgLink, index);
   newGood.oldID = inputGood.goodID; //hold on to the old id that references its place in the goods array
   this.cart.push(newGood);
@@ -193,6 +201,28 @@ $(document).ready(function() {
     }
     return output;
   }
+
+  function showCartItems() {
+    var output = "";
+    for (var i =0; i < siteManager.currentShopper[0].cart.length; i++) {
+      var subTotal = siteManager.currentShopper[0].cart[i].quantity * siteManager.currentShopper[0].cart[i].price;
+      output += '<div class="row">' +
+                                '<div class="col-sm-3">' +
+                                  '<p>Name: '+ siteManager.currentShopper[0].cart[i].goodName + '</p>' +
+                                '</div>' +
+                                '<div class="col-sm-3">' +
+                                  '<p>Quantity: ' + siteManager.currentShopper[0].cart[i].quantity + '</p>' +
+                                '</div>' +
+                                '<div class="col-sm-3">' +
+                                  '<p>Price: ' + siteManager.currentShopper[0].cart[i].price + '</p>'+
+                                '</div>'+
+                                '<div class="col-sm-3">'+
+                                  '<p>Subtotal: ' + subTotal + '</p>' +
+                                '</div>'+
+                              '</div>';
+    }
+    return output;
+  }
   //Create a new Account Functionality
   $('#newAccount').submit(function(event) {
     event.preventDefault();
@@ -218,7 +248,9 @@ $(document).ready(function() {
         $("#logOutButton").show(); //Display logOutButton
         $("#btnSignUp").hide(); //Hide signUpButton
         $("#btnSignIn").hide(); //Hide signIn
-        $('#userCart').show();
+        $("#userCart").show();
+        var output = showCartItems();
+        $('#cartItems').html(output);
         console.log("this is account bank ");
         console.log(siteManager.accounts);
         console.log("this is current shopper ");
@@ -244,27 +276,28 @@ $(document).ready(function() {
     console.log ( siteManager.goods[index].goodName );
     console.log ( siteManager.goods[index].price );
 
-    var goodName = siteManager.goods[index].goodName
-    var goodPrice = siteManager.goods[index].price
+    var goodName = siteManager.goods[index].goodName;
+    var goodPrice = siteManager.goods[index].price;
     var subTotal = siteManager.goods[index].price * quantityPurchased;
 
     var lastIndex = (siteManager.currentShopper[0].cart.length) - 1;
     if(success === 1){
-      $('#cartItems').append('<div class="row">' +
-                                '<div class="col-sm-3">' +
-                                  '<p>Name: '+ siteManager.currentShopper[0].cart[lastIndex].goodName + '</p>' +
-                                '</div>' +
-                                '<div class="col-sm-3">' +
-                                  '<p>Quantity: ' + siteManager.currentShopper[0].cart[lastIndex].quantity + '</p>' +
-                                '</div>' +
-                                '<div class="col-sm-3">' +
-                                  '<p>Price: ' + siteManager.currentShopper[0].cart[lastIndex].price + '</p>'+
-                                '</div>'+
-                                '<div class="col-sm-3">'+
-                                  '<p>Subtotal: ' + (siteManager.currentShopper[0].cart[lastIndex].quantity * siteManager.currentShopper[0].cart[lastIndex].price) + '</p>' +
-                                '</div>'+
-                              '</div>');
-
+      // $('#cartItems').append('<div class="row">' +
+      //                           '<div class="col-sm-3">' +
+      //                             '<p>Name: '+ siteManager.currentShopper[0].cart[lastIndex].goodName + '</p>' +
+      //                           '</div>' +
+      //                           '<div class="col-sm-3">' +
+      //                             '<p>Quantity: ' + siteManager.currentShopper[0].cart[lastIndex].quantity + '</p>' +
+      //                           '</div>' +
+      //                           '<div class="col-sm-3">' +
+      //                             '<p>Price: ' + siteManager.currentShopper[0].cart[lastIndex].price + '</p>'+
+      //                           '</div>'+
+      //                           '<div class="col-sm-3">'+
+      //                             '<p>Subtotal: ' + (siteManager.currentShopper[0].cart[lastIndex].quantity * siteManager.currentShopper[0].cart[lastIndex].price) + '</p>' +
+      //                           '</div>'+
+      //                         '</div>');
+      var output = showCartItems();
+      $('#cartItems').html(output);
     }
     $(this).find('input').val('');
     console.log(siteManager.currentShopper[0]);
@@ -299,7 +332,9 @@ $(document).ready(function() {
       $("#logOutButton").show(); //Display logOutButton
       $("#btnSignUp").hide(); //Hide signUpButton
       $("#btnSignIn").hide(); //Hide signIn
-      $('#userCart').show();
+      $("#userCart").show();
+      var output = showCartItems();
+      $('#cartItems').html(output);
     }
     console.log("this is account bank ");
     console.log(siteManager.accounts);
@@ -314,9 +349,8 @@ $(document).ready(function() {
     $("#btnSignUp").show();
     $("#btnSignIn").show();
     $("#logOutButton").hide();
-    $('#userCart').hide();
-    console.log("this is current shopper ");
-    console.log(siteManager.currentShopper);
+
+    $("#userCart").hide();
   });
   //Checkout Button Functionality
   $('#btnCheckout').click(function(event) {
@@ -328,6 +362,8 @@ $(document).ready(function() {
     $("#productDisplay").hide(); //Show the hidden products
     $('#userCart').hide();
     $('#receipt').show();
+    var output = showCartItems();
+    $('#cartItems').html(output);
   });
   $('#btnContinue').click(function(event) {
     event.preventDefault();
