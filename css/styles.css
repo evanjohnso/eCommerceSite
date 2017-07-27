@@ -156,3 +156,58 @@ div .jumbotron h1 {
   font-size: 19px;
   border: 1px solid red;
 }
+h4 {
+  font-family: 'Raleway', sans-serif;
+  color: orange;
+  text-align: center;
+}
+h5 {
+  font-family: 'Raleway', sans-serif;
+  font-size: 27px;
+  font-weight: bold;
+  color: orange;
+  text-align: center;
+  text-decoration: underline;
+}
+.quote {
+  float: left;
+}
+
+.missionStatement p {
+  color: black;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  text-align: justify;
+  padding: 3px;
+}
+.pitaya {
+  float: right;
+  max-width: 100%;
+}
+.well {
+  background-color: white;
+  margin: 20px;
+  padding: -10px;
+  border: 1px solid orange;
+  margin-top: 100px;
+}
+
+.well .missionStatement p {
+  text-align: justify;
+}
+.horned {
+  float: left;
+  max-width: 25%;
+  margin-left: 40px;
+  margin-top: 30px;
+}
+.row .values {
+  word-wrap: break-word;
+  float: left;
+}
+.col-md-3 {
+    /*margin: 2px;*/
+}
+.missionVisionValues {
+  float: right;
+}
