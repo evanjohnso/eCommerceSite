@@ -61,3 +61,7 @@ div .jumbotron h1 {
 .products input {
   color: black;
 }
+
+#logOutButton {
+  display: none;
+}
