@@ -31,6 +31,19 @@ function testPassword(first, second) {
     return false;
   }
 }
+SiteManager.prototype.uniqueUserName = function (uniqueName) {
+  if (this.accounts.length === 0) {
+    return true;
+  } else {
+    for (var i = 0; i <= this.accounts.length; i++) {
+      if (this.accounts[i].userName === uniqueName) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+}
 function populateGoods(sitemanager){
   var name = ["Ackee", "Buddhas Hand", "Hala Aka Puhala Tree Fruit", "Horned Melon", "Jackfruit", "Mangosteen", "Pitaya", "Rambutan", "Romanesco Broccoli"];
   var desc = ["So what does ackee taste like? It's completely unique. The fruit has a buttery, creamy texture and a mildtaste that reminded me of hearts of palm. The saltfish in the dish plays off the mild fruit nicely, adding a saline tang.", "Though it looks like a lemon gone wild, the Buddha's hand is actually a distinct fruit in the citron family. It has a sweet, lemon blossom aroma and no juice or pulp. The mild-tasting pith is not bitter, so the fruit can be zested or used whole.", "Although the hala fruit was indeed eaten in times of famine in Hawai'i, the edible part wasn't considered all that tasty.", "connoisseurs describe the flavor of the slimy green interior as a cross between cucumber, zucchini, and kiwifruit (though as it ripens, it tastes more like a banana). A fully ripened kiwano has an orange rind with prominent spikes. To eat plain, cut the fruit in half, as shown above.connoisseurs describe the flavor of the slimy green interior as a cross between cucumber, zucchini, and kiwifruit (though as it ripens, it tastes more like a banana). A fully ripened kiwano has an orange rind with prominent spikes. To eat plain, cut the fruit in half, as shown above.", "The starchy unripe fruit can be cooked in curries, while sweet, ripe jackfruit complements sticky rice and ice cream. You can get jackfruit chips, jackfruit noodles, jackfruit papad. Followers of American vegan-cooking blogs, on the other hand, will find unripe jackfruit compared, with confounding frequency, to 'vegan pulled pork'.", "It's not very common in North America, but if you grew up in Southeast Asia, chances are you're familiar with this sweet yet tangy tropical fruit. The mangosteen is a nearly spherical fruit with a thick, inedible deep purple skin, a succulent white segmented interior, and a thick, cartoonish green stem", "Dragonfruit (pitaya) doesn't have much taste. The best way I can describe it, is kind of like a white kiwi - in terms of consistency/flavor. Usually not very sweet (like a kiwi). Tends to be more bland/subtle (once in a while somewhat sweet).", "Native to the Malay Archipelago, the name of this fruit is derived from the Malay word meaning 'hairy,' and you can see why. But once the hairy exterior of therambutan is peeled away, the tender, fleshy, delicious fruit is revealed. Its taste is described as sweet and sour, much like a grape.", "In fact, it's an edible flower from the family that includes broccoli, cauliflower, Brussels sprouts, and cabbage. It tastes very similar to cauliflower, but with a slightly nuttier, earthier flavor."];
@@ -186,31 +199,38 @@ $(document).ready(function() {
     var newUserName = $('#newUserName').val();
     var pswd = $('#newUserPassword').val();
     var pswdConfirm = $('#confirmPassword').val();
-    var verified = testPassword(pswd, pswdConfirm);
-    //If verified, create new Object
-    if (verified) {
-      var accountHolder = new Account(first, second, newUserName, pswd)
-      siteManager.currentShopper.push(accountHolder);
-      siteManager.accounts.push(accountHolder);
-      siteManager.currentShopper[0] = accountHolder;
-      $("#productDisplay").show(); //Show the hidden products
-      console.log(siteManager.accounts);
-      console.log(siteManager.currentShopper);
-    } else {
-      alert("Please enter a valid password");
+    var uniqueUser = siteManager.uniqueUserName(newUserName);
+    console.log(siteManager.uniqueUserName(newUserName));
+    //If userName not taken already
+    if (uniqueUser) {
+      var verified = testPassword(pswd, pswdConfirm);
+      //If verified, create new Object
+      if (verified) {
+        var accountHolder = new Account(first, second, newUserName, pswd)
+        siteManager.currentShopper.push(accountHolder);
+        siteManager.accounts.push(accountHolder);
+        // siteManager.currentShopper[0] = accountHolder;
+        $("#signUpButton").modal('hide'); //Hide the modal
+        $("#productDisplay").show(); //Show the hidden products
+        $("#logOutButton").show(); //Display logOutButton
+        $("#btnSignUp").hide(); //Hide signUpButton
+        $("#btnSignIn").hide(); //Hide signIn
+        console.log("this is account bank ");
+        console.log(siteManager.accounts);
+        console.log("this is current shopper ");
+        console.log(siteManager.currentShopper);
+        $('.form-group input').val(''); //Reset form fields
+      } else {
+        alert("Please enter a valid password");
+        $('.encryption').val('');
+      }
+    } else if (!uniqueUser) {
+      alert('Sorry, this user name is already taken!');
+      $('.userNameReset').val('');
+      $('.encryption').val('');
     }
 
-      // click(function(event){
-      //   d
-      // })
-    // $('.form-group input').val(''); //Reset form fields
-    $("#signUpButton").modal('toggle');
-    $("#logOutButton").show();
-    $("#btnSignUp").hide();
-    $("#btnSignIn").hide();
-
-
-    });
+  });
   $(".products").submit(function(event) {
     event.preventDefault();
     var quantityPurchased = parseInt ($(this).find('input').val() );
@@ -227,26 +247,32 @@ $(document).ready(function() {
     //From backend, either no accounts, no matching user/password, or valid and return that user
     if (!authorized) {
       alert('We have no friends, please make an account');
+      $('.form-group input').val(''); //Reset form fields
     } else if (authorized === 42) {
-      alert('Please enter a valid input');
+      alert('Your username and/or password is incorrect, we\'ll wait');
+      $('.form-group input').val(''); //Reset form fields
     } else {
       $('.form-group input').val(''); //Reset form fields
-      $('.welcomeScreen').show();
-      // $('.displayName').text(authorized.first);
-      $("#productDisplay").show();
-      $("#signInScreen").hide();
+      $("#signInModal").modal('hide'); //Hide the modal
+      $("#productDisplay").show(); //Show the hidden products
+      $("#logOutButton").show(); //Display logOutButton
+      $("#btnSignUp").hide(); //Hide signUpButton
+      $("#btnSignIn").hide(); //Hide signIn
     }
+    console.log("this is account bank ");
+    console.log(siteManager.accounts);
+    console.log("this is current shopper ");
+    console.log(siteManager.currentShopper);
   });
-  console.log(siteManager.currentShopper);
+
   $('#logOutButton').click(function(event) {
     event.preventDefault();
     siteManager.currentShopper.length = 0;
-
     $('#productDisplay').hide();
     $("#btnSignUp").show();
     $("#btnSignIn").show();
     $("#logOutButton").hide();
-
-    alert('peace mothafucka');
+    console.log("this is current shopper ");
+    console.log(siteManager.currentShopper);
   });
 });

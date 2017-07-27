@@ -12,11 +12,11 @@
     <div class="container">
       <div class="container header">
         <!-- Log Out Button -->
-        <button type="button" class="btn btn-primary btn-lg" id="btnSignIn" data-toggle="modal" data-target="#myModal">
+        <button type="button" class="btn btn-primary btn-lg" id="btnSignIn" data-toggle="modal" data-target="#signInModal">
           Sign In
         </button>
         <!-- Sign In Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -31,11 +31,11 @@
                   <form class="form-group" id="signIn">
                     <div class="form-group">
                       <label for="userName">User Name: </label>
-                      <input type="text" id="userName">
+                      <input type="text" id="userName" required>
                     </div>
                     <div class="form-group">
                       <label for="userPassword">Password:</label>
-                      <input type="password" id="userPassword">
+                      <input type="password" id="userPassword" required>
                     </div>
                     <button type="submit" class="btn btn-success">Sign In</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -78,15 +78,15 @@
                   </div>
                   <div class="form-group">
                     <label for="newUserName">User Name: </label>
-                    <input type="text" id="newUserName">
+                    <input type="text" id="newUserName" class="userNameReset">
                   </div>
                   <div class="form-group">
                     <label for="newUserPassword">Password:</label>
-                    <input type="password" id="newUserPassword">
+                    <input type="password" id="newUserPassword" class="encryption" required>
                   </div>
                   <div class="form-group">
                     <label for="confirmPassword">Confirm Password:</label>
-                    <input type="password" id="confirmPassword">
+                    <input type="password" id="confirmPassword" class="encryption" required>
                   </div>
                   <button type="submit" class="btn btn-success">Sign Up!</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
