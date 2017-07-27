@@ -33,15 +33,16 @@ function testPassword(first, second) {
 }
 SiteManager.prototype.uniqueUserName = function (uniqueName) {
   if (this.accounts.length === 0) {
+    console.log('this length is 0');
     return true;
-  } else {
-    for (var i = 0; i <= this.accounts.length; i++) {
+  } else if (this.accounts.length > 0) {
+    for (var i = 0; i < this.accounts.length; i++) {
       if (this.accounts[i].userName === uniqueName) {
+        console.log('this name is taken');
         return false;
-      } else {
-        return true;
       }
     }
+    return true;
   }
 }
 function populateGoods(sitemanager){
