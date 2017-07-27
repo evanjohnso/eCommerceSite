@@ -90,6 +90,7 @@ SiteManager.prototype.goodToCart = function(goodID, amount){
 
   this.currentShopper[0].addToCart(amount, this.goods[goodID]);
   console.log( this.currentShopper[0] );
+  return 1;
 }
 //will remove a specific amount of good(s) from the checkout cart and return it to the goods array
 SiteManager.prototype.cartToGood = function(goodID, amount){
@@ -245,7 +246,7 @@ $(document).ready(function() {
     event.preventDefault();
     var quantityPurchased = parseInt ($(this).find('input').val() );
     var index = parseInt ( $(this).find('input').attr('id') );
-    siteManager.goodToCart(index, quantityPurchased);
+    var success = siteManager.goodToCart(index, quantityPurchased);
     console.log ( siteManager.goods[index].goodName );
     console.log ( siteManager.goods[index].price );
 
@@ -253,21 +254,24 @@ $(document).ready(function() {
     var goodPrice = siteManager.goods[index].price
     var subTotal = siteManager.goods[index].price * quantityPurchased;
 
-    $('#cartItems').append('<div class="row">' +
-                              '<div class="col-sm-3">' +
-                                '<p>Name: '+ goodName + '</p>' +
-                              '</div>' +
-                              '<div class="col-sm-3">' +
-                                '<p>Quantity: ' + quantityPurchased + '</p>' +
-                              '</div>' +
-                              '<div class="col-sm-3">' +
-                                '<p>Price: ' + goodPrice + '</p>'+
-                              '</div>'+
-                              '<div class="col-sm-3">'+
-                                '<p>Subtotal: ' + subTotal + '</p>' +
-                              '</div>'+
-                            '</div>');
+    var lastIndex = (siteManager.currentShopper[0].cart.length) - 1;
+    if(success === 1){
+      $('#cartItems').append('<div class="row">' +
+                                '<div class="col-sm-3">' +
+                                  '<p>Name: '+ siteManager.currentShopper[0].cart[lastIndex].goodName + '</p>' +
+                                '</div>' +
+                                '<div class="col-sm-3">' +
+                                  '<p>Quantity: ' + siteManager.currentShopper[0].cart[lastIndex].quantity + '</p>' +
+                                '</div>' +
+                                '<div class="col-sm-3">' +
+                                  '<p>Price: ' + siteManager.currentShopper[0].cart[lastIndex].price + '</p>'+
+                                '</div>'+
+                                '<div class="col-sm-3">'+
+                                  '<p>Subtotal: ' + (siteManager.currentShopper[0].cart[lastIndex].quantity * siteManager.currentShopper[0].cart[lastIndex].price) + '</p>' +
+                                '</div>'+
+                              '</div>');
 
+    }
     $(this).find('input').val('');
     console.log(siteManager.currentShopper[0]);
     if(siteManager.goods[index].quantity <= 0){
