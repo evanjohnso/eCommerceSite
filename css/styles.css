@@ -81,12 +81,14 @@ div .jumbotron h1 {
 #userCart p {
   font-size: 12px;
   margin: 3px;
+}
 
 .btn {
   background-color: #47dd25;
   font-family: 'Raleway', sans-serif;
   font-size: 18px;
 }
+
 .btn:hover {
   background-color: orange;
 }
@@ -105,5 +107,5 @@ div .jumbotron h1 {
   color: gray;
 }
 .panel-body .btn {
-  margin-top: 
+  margin-top:
 }
