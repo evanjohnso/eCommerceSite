@@ -264,9 +264,10 @@ $(document).ready(function() {
     } else if (!uniqueUser) {
       alert('Sorry, this user name is already taken!');
       $('.userNameReset').val('');
+      $('[type=number]').val(1);
       $('.encryption').val('');
     }
-
+    $('[type=number]').val(1);
   });
   //Add items to cart
   $(".products").submit(function(event) {
@@ -298,6 +299,7 @@ $(document).ready(function() {
       $('#' + index + "j").attr("class", "panel panel-danger");
       $("#" + index + "j .style1").text(siteManager.goods[index].goodName + "-SOLD OUT");
     }
+    $('[type=number]').val(1);
   });
 
   //Check backend storage for matching account
