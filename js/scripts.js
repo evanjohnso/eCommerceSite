@@ -205,10 +205,10 @@ $(document).ready(function() {
       // })
     // $('.form-group input').val(''); //Reset form fields
     $("#signUpButton").modal('toggle');
-
     $("#logOutButton").show();
     $("#btnSignUp").hide();
     $("#btnSignIn").hide();
+
 
     });
   $(".products").submit(function(event) {
@@ -235,7 +235,6 @@ $(document).ready(function() {
       // $('.displayName').text(authorized.first);
       $("#productDisplay").show();
       $("#signInScreen").hide();
-
     }
   });
   console.log(siteManager.currentShopper);
