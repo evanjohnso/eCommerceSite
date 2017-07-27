@@ -188,7 +188,7 @@ $(document).ready(function() {
     }
     return output;
   }
-
+  //Create a new Account Functionality
   $('#newAccount').submit(function(event) {
     event.preventDefault();
     //Take values from user
@@ -207,7 +207,7 @@ $(document).ready(function() {
         var accountHolder = new Account(first, second, newUserName, pswd)
         siteManager.currentShopper.push(accountHolder);
         siteManager.accounts.push(accountHolder);
-        // siteManager.currentShopper[0] = accountHolder;
+        $('.currentCartName').text(siteManager.currentShopper[0].first);
         $("#signUpButton").modal('hide'); //Hide the modal
         $("#productDisplay").show(); //Show the hidden products
         $("#logOutButton").show(); //Display logOutButton
@@ -229,6 +229,7 @@ $(document).ready(function() {
     }
 
   });
+  //Add items to cart
   $(".products").submit(function(event) {
     event.preventDefault();
     var quantityPurchased = parseInt ($(this).find('input').val() );
@@ -262,7 +263,7 @@ $(document).ready(function() {
     console.log("this is current shopper ");
     console.log(siteManager.currentShopper);
   });
-
+  //Log Out Button Functionality
   $('#logOutButton').click(function(event) {
     event.preventDefault();
     siteManager.currentShopper.length = 0;
@@ -272,5 +273,10 @@ $(document).ready(function() {
     $("#logOutButton").hide();
     console.log("this is current shopper ");
     console.log(siteManager.currentShopper);
+  });
+  //Checkout Button Functionality
+  $('#btnCheckout').click(function(event) {
+    event.preventDefault();
+    alert('hello');
   });
 });

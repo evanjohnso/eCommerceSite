@@ -52,12 +52,22 @@ div .jumbotron h1 {
   display: none;
 }
 
-
-.header button {
+.headerButtons {
   margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.theButtons {
   float: right;
 }
 
 .products input {
   color: black;
+}
+
+#userCart {
+  float: right;
+  background-color: darkgrey;
+  border-radius: 4%;
+  padding-bottom: 1em;
 }

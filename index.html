@@ -10,11 +10,17 @@
   </head>
   <body>
     <div class="container">
-      <div class="container header">
-        <!-- Log Out Button -->
-        <button type="button" class="btn btn-primary btn-lg" id="btnSignIn" data-toggle="modal" data-target="#signInModal">
-          Sign In
-        </button>
+      <div class="container headerButtons">
+        <div class="theButtons">
+          <button type="button" class="btn btn-primary btn-lg" id="btnSignIn" data-toggle="modal" data-target="#signInModal">
+            Sign In
+          </button>
+          <button type="button" class="btn btn-warning btn-lg" id="btnSignUp" data-toggle="modal" data-target="#signUpButton">Sign Up!</button>
+          <button type="button" id="logOutButton" class="btn btn-success btn-lg">
+            Log Out
+          </button>
+        </div>
+      </div>
         <!-- Sign In Modal -->
         <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
@@ -48,14 +54,7 @@
             </div>
           </div>
         </div>
-        <button type="button" id="logOutButton" class="btn btn-success btn-lg">
-          Log Out
-        </button>
-        <!-- end of modal -->
-        <!-- Large modal -->
-        <button type="button" class="btn btn-warning btn-lg" id="btnSignUp" data-toggle="modal" data-target="#signUpButton">Sign Up!</button>
-
-
+        <!-- Sign up modal -->
         <div class="modal fade" id="signUpButton" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -94,21 +93,27 @@
               </div>
             </div>
             <div class="modal-footer">
-
             </div>
           </div>
         </div>
-        <!-- end of large modal -->
-      </div>
-      <div class="row">
-        <div class="jumbotron">
-          <h1>- FANTASTIC FRUITS -</h1>
+
+        </div>
+        <div class="container-fluid row" id="userCart">
+          <div class="container col-md-12">
+            <h3 id="cartItems"><span class="currentCartName"></span>&#39;s Cart: </h3>
+
+            <button type="button" class="btn btn-warning" id="btnCheckout">Checkout!</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="jumbotron">
+            <h1>- FANTASTIC FRUITS -</h1>
+          </div>
+        </div>
+        <!-- This is where we took out the input forms -->
+        <div class="container" id="productDisplay">
         </div>
       </div>
-      <!-- This is where we took out the input forms -->
-      <div class="container" id="productDisplay">
-      </div>
-    </div>
   </body>
 </html>
 
