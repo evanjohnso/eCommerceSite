@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik');
+@import url('https://fonts.googleapis.com/css?family=Pacifico|Raleway');
 
 html {
   position: relative;
@@ -6,22 +6,24 @@ html {
 }
 
 body {
-  background: url(background.jpeg);
+  background: url("../img/fruit_bck.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   color: lightblue;
+  background-color: white;
 }
 
+.row .jumbotron h1 {
+  font-family: 'Pacifico';
+  font-size: 70px;
+  color: orange;
+}
 .jumbotron {
-  background: white;
-  opacity: .5;
+  background: inherit;
+  background-image: url("../img/circle.png");
   text-align: center;
   margin-top: 2em;
-  border: 3px solid white;
-  border-radius: 5%;
-  font-family: 'Rubik', sans-serif;
-  font-size: 100px;
 }
 div .jumbotron h1 {
   color: black
@@ -43,7 +45,6 @@ div .jumbotron h1 {
 }
 
 .style1{
-  font-size: 2em;
   word-wrap: break-word;
   width: 10em;
 }
@@ -70,4 +71,30 @@ div .jumbotron h1 {
   background-color: darkgrey;
   border-radius: 4%;
   padding-bottom: 1em;
+}
+
+.btn {
+  background-color: #47dd25;
+  font-family: 'Raleway', sans-serif;
+  font-size: 18px;
+}
+.btn:hover {
+  background-color: orange;
+}
+.btn-outline {
+  background-color: inherit;
+}
+
+.panel-heading p {
+  background-image: inherit;
+  font-family: 'Raleway', sans-serif;
+  color: orange;
+  font-size: 2em;
+}
+.panel-body {
+  height: 350px;
+  color: gray;
+}
+.panel-body .btn {
+  margin-top: 
 }
