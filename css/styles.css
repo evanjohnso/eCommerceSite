@@ -13,7 +13,12 @@ body {
   color: lightblue;
   background-color: white;
 }
-
+.row .col-md-4 p .priceStyle {
+  color: orange;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+}
 .row .jumbotron h1 {
   font-family: 'Pacifico';
   font-size: 70px;
@@ -23,7 +28,7 @@ body {
   background: inherit;
   background-image: url("../img/circle.png");
   text-align: center;
-  margin-top: 2em;
+  height: 2em;
 }
 div .jumbotron h1 {
   color: black
@@ -72,15 +77,33 @@ div .jumbotron h1 {
 }
 
 #userCart {
-  float: right;
-  background-color: darkgrey;
-  border-radius: 4%;
-  padding-bottom: 1em;
+  background-color: orange;
+  border-radius: 1%;
+  padding: 1.5em;
+  margin: 1em;
+  opacity: .5;
+}
+#userCart h3 {
+  color: white;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+}
+#userCart p {
+  font-size: 18px;
+  margin: 3px;
+  padding-bottom: 10px;
 }
 
-#userCart p {
-  font-size: 12px;
-  margin: 3px;
+.container .forButton {
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100vh;
+  display: flex;
+}
+.container .btn-holder {
+  justify-content: flex-end;
+  display: flex;
 }
 
 .btn {
@@ -96,16 +119,22 @@ div .jumbotron h1 {
   background-color: inherit;
 }
 
+.panel > .panel-heading {
+    background-image: none;
+}
 .panel-heading p {
   background-image: inherit;
   font-family: 'Raleway', sans-serif;
   color: orange;
-  font-size: 2em;
+  font-size: 1.8em;
 }
 .panel-body {
   height: 350px;
   color: gray;
 }
 .panel-body .btn {
-  margin-top:
+  position: absolute;
+  margin-top: 10px;
+  bottom: 50px;
+  right: 50px;
 }
