@@ -184,7 +184,7 @@ $(document).ready(function() {
                       '<p>' + productArray[i].price + '</p>' +
                       '<form class="form-group products">' +
                         '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
-                        '<input type = "number" id= "'+ productArray[i].goodID +' " placeholder="1">'+
+                        '<input type = "number" id= "'+ productArray[i].goodID +' " value="1" min="0">'+
                         '<button class="btn btn-info center-block">Add to Cart!</button>'+
                       '</form>'+
                     '</div>'+
@@ -248,7 +248,6 @@ $(document).ready(function() {
         $("#logOutButton").show(); //Display logOutButton
         $("#btnSignUp").hide(); //Hide signUpButton
         $("#btnSignIn").hide(); //Hide signIn
-        $("#userCart").show();
         var output = showCartItems();
         $('#cartItems').html(output);
         console.log("this is account bank ");
@@ -306,6 +305,7 @@ $(document).ready(function() {
       $('#' + index + "j").attr("class", "panel panel-danger");
       $("#" + index + "j .style1").text(siteManager.goods[index].goodName + "-SOLD OUT");
     }
+    $("#userCart").show();
   });
 
 
@@ -355,13 +355,15 @@ $(document).ready(function() {
   //Checkout Button Functionality
   $('#btnCheckout').click(function(event) {
     event.preventDefault();
-    // siteManager.currentShopper[0].totalCart();
-    alert( siteManager.currentShopper[0].totalCart() );
+
+    // alert( siteManager.currentShopper[0].totalCart() );
     $('.currentCartName').text(siteManager.currentShopper[0].first);
     $('.checkoutTotal').text(siteManager.currentShopper[0].totalCart() );
     $("#productDisplay").hide(); //Show the hidden products
     $('#userCart').hide();
     $('#receipt').show();
+
+    //Reset the cart
     var output = showCartItems();
     $('#cartItems').html(output);
   });
