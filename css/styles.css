@@ -76,6 +76,7 @@ div .jumbotron h1 {
   background-color: darkgrey;
   border-radius: 4%;
   padding-bottom: 1em;
+  display: none;
 }
 
 #userCart p {

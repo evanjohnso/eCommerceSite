@@ -155,13 +155,6 @@ $(document).ready(function() {
   var goods = showProducts(goodsArray);
   $('#productDisplay').html(goods);
 
-
-
-
-
-
-
-
   function showProducts(productArray) {
     var colCount = 3;
     var output = "";
@@ -200,6 +193,28 @@ $(document).ready(function() {
     }
     return output;
   }
+
+  function showCartItems() {
+    var output = "";
+    for (var i =0; i < siteManager.currentShopper[0].cart.length; i++) {
+      var subTotal =
+      output += '<div class="row">' +
+                                '<div class="col-sm-3">' +
+                                  '<p>Name: '+ siteManager.currentShopper[0].cart[i].goodName + '</p>' +
+                                '</div>' +
+                                '<div class="col-sm-3">' +
+                                  '<p>Quantity: ' + siteManager.currentShopper[0].cart[i].quantity + '</p>' +
+                                '</div>' +
+                                '<div class="col-sm-3">' +
+                                  '<p>Price: ' + siteManager.currentShopper[0].cart[i].price + '</p>'+
+                                '</div>'+
+                                '<div class="col-sm-3">'+
+                                  '<p>Subtotal: ' + (siteManager.currentShopper[0].cart[i].quantity * siteManager.currentShopper[0].cart[i].price) + '</p>' +
+                                '</div>'+
+                              '</div>';
+    }
+    return output;
+  }
   //Create a new Account Functionality
   $('#newAccount').submit(function(event) {
     event.preventDefault();
@@ -225,6 +240,9 @@ $(document).ready(function() {
         $("#logOutButton").show(); //Display logOutButton
         $("#btnSignUp").hide(); //Hide signUpButton
         $("#btnSignIn").hide(); //Hide signIn
+        $("#userCart").show();
+        var output = showCartItems();
+        $('#cartItems').html(output);
         console.log("this is account bank ");
         console.log(siteManager.accounts);
         console.log("this is current shopper ");
@@ -250,27 +268,28 @@ $(document).ready(function() {
     console.log ( siteManager.goods[index].goodName );
     console.log ( siteManager.goods[index].price );
 
-    var goodName = siteManager.goods[index].goodName
-    var goodPrice = siteManager.goods[index].price
+    var goodName = siteManager.goods[index].goodName;
+    var goodPrice = siteManager.goods[index].price;
     var subTotal = siteManager.goods[index].price * quantityPurchased;
 
     var lastIndex = (siteManager.currentShopper[0].cart.length) - 1;
     if(success === 1){
-      $('#cartItems').append('<div class="row">' +
-                                '<div class="col-sm-3">' +
-                                  '<p>Name: '+ siteManager.currentShopper[0].cart[lastIndex].goodName + '</p>' +
-                                '</div>' +
-                                '<div class="col-sm-3">' +
-                                  '<p>Quantity: ' + siteManager.currentShopper[0].cart[lastIndex].quantity + '</p>' +
-                                '</div>' +
-                                '<div class="col-sm-3">' +
-                                  '<p>Price: ' + siteManager.currentShopper[0].cart[lastIndex].price + '</p>'+
-                                '</div>'+
-                                '<div class="col-sm-3">'+
-                                  '<p>Subtotal: ' + (siteManager.currentShopper[0].cart[lastIndex].quantity * siteManager.currentShopper[0].cart[lastIndex].price) + '</p>' +
-                                '</div>'+
-                              '</div>');
-
+      // $('#cartItems').append('<div class="row">' +
+      //                           '<div class="col-sm-3">' +
+      //                             '<p>Name: '+ siteManager.currentShopper[0].cart[lastIndex].goodName + '</p>' +
+      //                           '</div>' +
+      //                           '<div class="col-sm-3">' +
+      //                             '<p>Quantity: ' + siteManager.currentShopper[0].cart[lastIndex].quantity + '</p>' +
+      //                           '</div>' +
+      //                           '<div class="col-sm-3">' +
+      //                             '<p>Price: ' + siteManager.currentShopper[0].cart[lastIndex].price + '</p>'+
+      //                           '</div>'+
+      //                           '<div class="col-sm-3">'+
+      //                             '<p>Subtotal: ' + (siteManager.currentShopper[0].cart[lastIndex].quantity * siteManager.currentShopper[0].cart[lastIndex].price) + '</p>' +
+      //                           '</div>'+
+      //                         '</div>');
+      var output = showCartItems();
+      $('#cartItems').html(output);
     }
     $(this).find('input').val('');
     console.log(siteManager.currentShopper[0]);
@@ -305,6 +324,9 @@ $(document).ready(function() {
       $("#logOutButton").show(); //Display logOutButton
       $("#btnSignUp").hide(); //Hide signUpButton
       $("#btnSignIn").hide(); //Hide signIn
+      $("#userCart").show();
+      var output = showCartItems();
+      $('#cartItems').html(output);
     }
     console.log("this is account bank ");
     console.log(siteManager.accounts);
@@ -319,8 +341,7 @@ $(document).ready(function() {
     $("#btnSignUp").show();
     $("#btnSignIn").show();
     $("#logOutButton").hide();
-    console.log("this is current shopper ");
-    console.log(siteManager.currentShopper);
+    $("#userCart").hide();
   });
   //Checkout Button Functionality
   $('#btnCheckout').click(function(event) {
