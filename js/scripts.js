@@ -349,7 +349,7 @@ $(document).ready(function() {
     event.preventDefault();
 
     $('.currentCartName').text(siteManager.currentShopper[0].first);
-    $('.checkoutTotal').text(siteManager.currentShopper[0].totalCart() );
+    $('.checkoutTotal').text( siteManager.currentShopper[0].totalCart() );
     $("#productDisplay").hide(); //Show the hidden products
     $('#userCart').hide();
     $('#receipt').show();
