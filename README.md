@@ -1,6 +1,6 @@
 # eCommerceSite
 
-#### Fantastic Fruits-  The best exotic produce market west of the Mississippi, 7/27/2017
+#### Fantastic Fruits-  The best exotic produce market on the webb  , 7/27/2017
 
 #### By Carson Canales, Evan Johnson, Haneen AbuKhater, David Cuthell, Kate Byars
 
@@ -25,6 +25,7 @@ _Fantastic fruits is an eCommerce exotic produce market that allows customers to
 ## Setup/Installation Requirements
 _Click link below_
 _Create a user name and password_
+_https://evanjohnso.github.io/eCommerceSite_
 
 ## Known Bugs
 _Our produce is insect free! However, if you encounter any problems with our website please refer to the support and contact details to inform us of any issues._
