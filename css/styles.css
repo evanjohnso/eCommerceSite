@@ -13,7 +13,12 @@ body {
   color: lightblue;
   background-color: white;
 }
-
+.row .col-md-4 p .priceStyle {
+  color: orange;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+}
 .row .jumbotron h1 {
   font-family: 'Pacifico';
   font-size: 70px;
@@ -23,7 +28,7 @@ body {
   background: inherit;
   background-image: url("../img/circle.png");
   text-align: center;
-  margin-top: 2em;
+  height: 2em;
 }
 div .jumbotron h1 {
   color: black
@@ -51,6 +56,7 @@ div .jumbotron h1 {
 
 #productDisplay {
   display: none;
+  margin-top: 2em;
 }
 
 .col-sm-4 {
@@ -72,16 +78,35 @@ div .jumbotron h1 {
 }
 
 #userCart {
-  float: right;
-  background-color: darkgrey;
-  border-radius: 4%;
-  padding-bottom: 1em;
+  background-color: orange;
+  border-radius: 1%;
+  padding: 1.5em;
+  margin-top: 5em;
+  opacity: .5;
   display: none;
 }
-
+#userCart h3 {
+  color: white;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+}
 #userCart p {
-  font-size: 12px;
-  margin: 3px;
+  font-size: 18px;
+  /*margin-top: 4em;
+  margin-bottom: 2em;
+  padding-bottom: 10px;*/
+}
+
+.container .forButton {
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100vh;
+  display: flex;
+}
+.container .btn-holder {
+  justify-content: flex-end;
+  display: flex;
 }
 
 .btn {
@@ -97,24 +122,92 @@ div .jumbotron h1 {
   background-color: inherit;
 }
 
+.panel > .panel-heading {
+    background-image: none;
+}
 .panel-heading p {
   background-image: inherit;
   font-family: 'Raleway', sans-serif;
   color: orange;
-  font-size: 2em;
+  font-size: 1.8em;
 }
 .panel-body {
   height: 350px;
   color: gray;
 }
 .panel-body .btn {
-  margin-top:
+  position: absolute;
+  margin-top: 10px;
+  bottom: 50px;
+  right: 50px;
 }
 
 #receipt {
   display: none;
-  border: 3px solid black;
   margin: auto;
   text-align: center;
   padding-bottom: 1em;
+  margin-top: 5em;
+  padding-top: .2em;
+  color: green;
+  opacity: .5;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  font-size: 19px;
+  border: 1px solid red;
+}
+h4 {
+  font-family: 'Raleway', sans-serif;
+  color: orange;
+  text-align: center;
+}
+h5 {
+  font-family: 'Raleway', sans-serif;
+  font-size: 27px;
+  font-weight: bold;
+  color: orange;
+  text-align: center;
+  text-decoration: underline;
+}
+.quote {
+  float: left;
+}
+
+.missionStatement p {
+  color: black;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  text-align: justify;
+  padding: 3px;
+}
+.pitaya {
+  float: right;
+  max-width: 100%;
+}
+.well {
+  background-color: white;
+  margin: 20px;
+  padding: -10px;
+  border: 1px solid orange;
+  margin-top: 100px;
+}
+
+.well .missionStatement p {
+  text-align: justify;
+}
+.horned {
+  float: left;
+  max-width: 25%;
+  margin-left: 40px;
+  margin-top: 30px;
+}
+.row .values {
+  word-wrap: break-word;
+  float: left;
+}
+.col-md-3 {
+    /*margin: 2px;*/
+}
+.missionVisionValues {
+  float: right;
 }
