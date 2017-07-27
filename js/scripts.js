@@ -251,6 +251,7 @@ $(document).ready(function() {
         $("#userCart").show();
         var output = showCartItems();
         $('#cartItems').html(output);
+        $("#mission").hide();
         console.log("this is account bank ");
         console.log(siteManager.accounts);
         console.log("this is current shopper ");
@@ -335,6 +336,7 @@ $(document).ready(function() {
       $("#userCart").show();
       var output = showCartItems();
       $('#cartItems').html(output);
+      $("#mission").hide();
     }
     console.log("this is account bank ");
     console.log(siteManager.accounts);
