@@ -246,7 +246,7 @@ $(document).ready(function() {
     var quantityPurchased = parseInt ($(this).find('input').val() );
     var index = parseInt ( $(this).find('input').attr('id') );
     siteManager.goodToCart(index, quantityPurchased);
-<<<<<<< HEAD
+
     console.log ( siteManager.goods[index].goodName );
     console.log ( siteManager.goods[index].price );
 
@@ -269,8 +269,7 @@ $(document).ready(function() {
                               '</div>'+
                             '</div>');
 
-    $(this).find('input').val(' ');
-=======
+
     $(this).find('input').val('');
     console.log(siteManager.currentShopper[0]);
     if(siteManager.goods[index].quantity <= 0){
@@ -278,7 +277,6 @@ $(document).ready(function() {
       $('#' + index + "j").attr("class", "panel panel-danger");
       $("#" + index + "j .style1").text(siteManager.goods[index].goodName + "-SOLD OUT");
     }
->>>>>>> ebef241dfce2669bfe5b40a12ac8c109f9ad5e5e
   });
 
 
