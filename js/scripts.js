@@ -181,7 +181,7 @@ $(document).ready(function() {
                     '</div>'+
                     '<div class="panel-body">'+
                       '<p>' + productArray[i].goodDesc + '</p>' +
-                      '<p class="priceStyle">$' + productArray[i].price + '</p>' +
+                      '<p class="priceStyle">$' + productArray[i].price.toFixed(2) + '</p>' +
                       '<form class="form-group products">' +
                         '<label for=" ' + productArray[i].goodID + ' ">' + "Quantity: " + '</label>' +
                         '<input type = "number" id= "'+ productArray[i].goodID +' " value="1" min="0">'+
@@ -214,10 +214,10 @@ $(document).ready(function() {
                                   '<p>Quantity: ' + siteManager.currentShopper[0].cart[i].quantity + '</p>' +
                                 '</div>' +
                                 '<div class="col-sm-3">' +
-                                  '<p>Price: ' + siteManager.currentShopper[0].cart[i].price + '</p>'+
+                                  '<p>Price: ' + siteManager.currentShopper[0].cart[i].price.toFixed(2) + '</p>'+
                                 '</div>'+
                                 '<div class="col-sm-3">'+
-                                  '<p>Subtotal: ' + subTotal + '</p>' +
+                                  '<p>Subtotal: ' + subTotal.toFixed(2) + '</p>' +
                                 '</div>'+
                               '</div>';
     }
@@ -349,7 +349,7 @@ $(document).ready(function() {
     event.preventDefault();
 
     $('.currentCartName').text(siteManager.currentShopper[0].first);
-    $('.checkoutTotal').text( siteManager.currentShopper[0].totalCart() );
+    $('.checkoutTotal').text(siteManager.currentShopper[0].totalCart().toFixed(2));
     $("#productDisplay").hide(); //Show the hidden products
     $('#userCart').hide();
     $('#receipt').show();
